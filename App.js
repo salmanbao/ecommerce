@@ -1,21 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
+import { Provider } from 'react-redux'
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import createStore from './src/stores';
+import RootScreen from './src/containers/Root/RootScreen'
+import { PersistGate } from 'redux-persist/integration/react'
+
+// const { store, persistor } = createStore()
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    // <Provider store={store}>
+      //  <PersistGate loading={null} persistor={persistor}>
+      <RootScreen />
+      // </PersistGate>
+  // </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
