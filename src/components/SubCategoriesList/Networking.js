@@ -4,7 +4,7 @@ import ImageBlurLoading from 'react-native-image-blur-loading';
 import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
- 
+import { WIRELESS_ROUTERS_AND_REPEATER } from './images'
 
 function NetworkingCard({ data }) {
 
@@ -23,7 +23,7 @@ function NetworkingCard({ data }) {
         </View>
     );
 }
- 
+
 const CardStyles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
@@ -43,14 +43,14 @@ const CardStyles = StyleSheet.create({
         textAlign: 'center',
 
     }
-}); 
+});
 
 
 const Networking = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Wireless Routers & Repeater',
-            image: 'https://www.clickit.pk/wp-content/uploads/2018/02/300Mbps-Mini-Wireless-WiFi-Router-Signal-Repeater-Extender-01.jpg'
+            image: WIRELESS_ROUTERS_AND_REPEATER
         }
     ])
     return (

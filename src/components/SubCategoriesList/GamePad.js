@@ -92,6 +92,7 @@ const GamePad = (props) => {
             category: 'WIFI Router',
             image: 'https://placeimg.com/640/480/any'
         },
+        
     ])
     return (
         <SafeAreaView style={styles.container}>

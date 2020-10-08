@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, View,Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
 import ImageBlurLoading from 'react-native-image-blur-loading';
- 
+import { CHARGER_AND_CABLES } from './images'
 
 function IphoneAccessoriesCard({ data }) {
 
@@ -23,7 +23,7 @@ function IphoneAccessoriesCard({ data }) {
         </View>
     );
 }
- 
+
 const CardStyles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
@@ -43,14 +43,14 @@ const CardStyles = StyleSheet.create({
         textAlign: 'center',
 
     }
-}); 
+});
 
 
 const IphoneAccessories = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Charger & Cables',
-            image: 'https://da2lh5cs8ikqj.cloudfront.net/cart-products/d1UUxmXjJ2I4MNy1.medium'
+            image: CHARGER_AND_CABLES
         }
     ])
     return (

@@ -1,36 +1,39 @@
-const CCTV_CAMERAS = 'https://www.vippng.com/png/detail/41-419003_cctv-camera-images-png-cctv-cameras.png';
-const DIGITAL_CAMERAS = 'https://www.bnwcollections.com/image/cache/catalog/canon-eos-r6-mirrorless-digital-camera-with-600mm-f-11-is-stm-lens-price-in-pakistan-img1-800x800-0-.jpg';
-const POWER_SUPPLY = 'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5622/5622834_sd.jpg';
-const WIFI_CAMERA = 'https://www.symbios.pk/image/cache/data/i/intelipcamera_1-500x500.jpg';
-
-const CAR_ELECTRICAL_APPLIANCES = 'https://i.pinimg.com/236x/63/9b/98/639b989541362b58faf21a8852094fe0.jpg';
-const GPS_TRACKER = 'https://cf.shopee.com.my/file/22815a7bb17aae9c6707d32c3b2b9ba8';
-
-const ACCESSORIES = '';
-const SMART_WATCHES = '';
-const WIFI_ROUTER = '';
-const COOKERS = '';
-const CABLES_AND_ADAPTERS = '';
-const EXTERNAL_DATA_STORAGE = '';
-const SMART_DEVICES_AND_SWICTHES = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-const WIFI_ROUTER = '';
-
-exports = {
-    CCTV_CAMERAS,
-    DIGITAL_CAMERAS,
-    POWER_SUPPLY,
-    WIFI_CAMERA,
-
-    CAR_ELECTRICAL_APPLIANCES,
-    GPS_TRACKER,
-}
+export const ACCESSORIES = 'https://image.made-in-china.com/2f0j00raRUIEPHBCqp/Best-Price-Factory-Clear-Stock-Wholesale-Mobile-Phone-Accessories-for-Samsung-Android-Mobile.jpg';
+export const AUDIO_CABLES = 'https://ae01.alicdn.com/kf/HLB14pG0NZfpK1RjSZFOq6y6nFXax/3-5mm-Female-Stereo-to-2-RCA-Male-Plug-Aux-Audio-Headphone-Jack-Converter-Adapter-Cable.jpg';
+export const AUDIO_VISUAL_EXTENDERS = 'https://www.serveredge.com/media/catalog/category/HD-EX-XX-HDBT_web_edited_1.jpg';
+export const CCTV_CAMERAS = 'https://www.vippng.com/png/detail/41-419003_cctv-camera-images-png-cctv-cameras.png';
+export const CAR_ELECTRICAL_APPLIANCES = 'https://i.pinimg.com/236x/63/9b/98/639b989541362b58faf21a8852094fe0.jpg';
+export const COOKERS = 'https://brain-images-ssl.cdn.dixons.com/1/6/10194261/u_10194261.jpg';
+export const CABLES_AND_ADAPTERS = 'https://media.startech.com/cms/startech.com/media/images/display-adapter/display-adapter-cables-1.png';
+export const CHARGER_AND_CABLES = 'https://da2lh5cs8ikqj.cloudfront.net/cart-products/d1UUxmXjJ2I4MNy1.medium';
+export const CLEANING_AND_OTHER_HOME_EQUIPMENT = 'https://advicesacademy.com/wp-content/uploads/2018/04/Mop.jpg';
+export const CONNECTOR_AND_CONVERTER = 'https://images-na.ssl-images-amazon.com/images/I/51Cz0fZlPDL._AC_SL1000_.jpg';
+export const DIGITAL_CAMERAS = 'https://www.bnwcollections.com/image/cache/catalog/canon-eos-r6-mirrorless-digital-camera-with-600mm-f-11-is-stm-lens-price-in-pakistan-img1-800x800-0-.jpg';
+export const DELL_LAPTOP = 'https://alaqsa.com.pk/wp-content/uploads/2020/02/Dell-Inspiron-3593.jpg';
+export const DESKTOP_AND_ACCESSORIES = 'https://media.officedepot.com/image/upload/f_auto,q_auto/coremedia/resource/blob/128100/1acd9507437ad0e239e8d9e98856e144/desktops-data.jpg';
+export const DOOR_LOCK = 'https://www.smartify.in/wp-content/uploads/2019/07/Smart-Door-Lock-NFS04.png';
+export const ELECTRICAL_EQUIPMENT_AND_SUPPLIES = 'https://ae01.alicdn.com/kf/HTB180E9JgHqK1RjSZFEq6AGMXXa9/SUSAN-735MP-600W-Ultrasonic-Inverter-Electrical-Equipment-Power-Supplies.jpg';
+export const EXTERNAL_DATA_STORAGE = 'https://www.macworld.co.uk/cmsdata/slideshow/3579792/best_external_storage_ixpand_flash_drive_1200.jpg';
+export const GOOGLE_PLAY_GIFT_CARD = 'https://www.cellphoneage.com/pub/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/g/o/google_store_10usd_recharge_card_1600x1600_1.jpg';
+export const GPS_TRACKER = 'https://cf.shopee.com.my/file/22815a7bb17aae9c6707d32c3b2b9ba8';
+export const HP_LAPTOP = 'https://5.imimg.com/data5/JM/PC/MY-26541044/hp-pavilion-x360-14m-ba013dx-500x500.jpg';
+export const HOME_FRAGRANCES =  'https://cdn.shopify.com/s/files/1/1801/2877/products/home-fragrance-all-four-100-ml_800x.jpg?v=1492042945';
+export const HEADPHONES = 'https://www.switch.pk/wp-content/uploads/2019/03/Wireless-L300-Bluetooth-Headphones-1-600x600.jpg';
+export const HOME = 'https://www.alfatah.com.pk/wp-content/uploads/2017/11/Home-Appliances-870x460-1.jpg';
+export const ITUNE_GIFT_CARD = 'https://www.qmart.pk/image/cache/cache/1001-2000/1215/additional/0e3d-itunes_gift_cards-0-1-550x550w.jpg';
+export const LAPTOP_CABLES_AND_ADAPTERS = 'https://cdn.shopify.com/s/files/1/0075/5302/4066/products/ACH225EU_MAIN1_600x.jpg?v=1589562927';
+export const LIGHTS_AND_LIGHTING = 'https://3dwarehouse.sketchup.com/warehouse/v1.0/publiccontent/0d78c356-2642-468f-acde-b382d84f29a4';
+export const LED_LIGHTS_AND_FLASHLIGHTS = 'https://w7.pngwing.com/pngs/1020/706/png-transparent-streamlight-inc-flashlight-tactical-light-lithium-ion-battery-flashlight-electronics-led-lamp-light.png';
+export const MOBILE_CHARGING_AND_CABLES = 'https://m.media-amazon.com/images/I/31JhE7tZQzL.jpg';
+export const MOUSE_AND_KEYBOARD = 'https://www.kindpng.com/picc/m/269-2695644_keyboard-and-mouse-png-bloody-q1100-transparent-png.png';
+export const MULTIMEDIA_SPEAKER = 'https://www.tejar.pk/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/b/o/bose_companion_2_series_iii_multimedia_speaker_system1_-_tejar.jpg';
+export const POWER_SUPPLY = 'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5622/5622834_sd.jpg';
+export const PRINTER_SCANNER_PROJECTOR = 'https://i.pinimg.com/originals/16/7f/3f/167f3fe7ae20a9227f701c41bef39db0.jpg';
+export const SECURITY_AND_SAFETY = 'https://www.securityandsafetythings.com/hs-fs/hubfs/Group%20(9).png?width=941&height=804&name=Group%20(9).png';
+export const SMART_DEVICES_AND_SWITCHES = 'https://www.leviton.com/en/images/lc/600x340+DS+image+2020+family.jpg';
+export const SMART_HOME_ASSISTANTS_AND_VOICE_CONTROL = 'https://storage.googleapis.com/madebygoog/v1/home/chirp_device-front_on_1440_2x.png';
+export const SMART_WATCHES = 'https://www.adorama.com/images/Large/lfid205l.jpg';
+export const WIFI_CAMERA = 'https://www.symbios.pk/image/cache/data/i/intelipcamera_1-500x500.jpg';
+export const WIRELESS_BLUETOOTH = 'https://jinnieworld.net/wp-content/uploads/2019/03/I9-TWS.jpeg';
+export const WIFI_ROUTER = 'https://i.pinimg.com/originals/4d/6e/e3/4d6ee35efaf1cc622ab654c0d7a86de7.png'
+export const WIRELESS_ROUTERS_AND_REPEATER = 'https://www.clickit.pk/wp-content/uploads/2018/02/300Mbps-Mini-Wireless-WiFi-Router-Signal-Repeater-Extender-01.jpg';

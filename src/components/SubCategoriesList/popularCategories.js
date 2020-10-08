@@ -1,25 +1,40 @@
 import React from 'react'
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, Pressable } from 'react-native';
 import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
 import ImageBlurLoading from 'react-native-image-blur-loading';
- 
+import { useNavigation } from '@react-navigation/native';
+import {
+    ACCESSORIES,
+    CCTV_CAMERAS,
+    WIFI_CAMERA,
+    SMART_WATCHES,
+    WIFI_ROUTER,
+    COOKERS,
+    CABLES_AND_ADAPTERS,
+    EXTERNAL_DATA_STORAGE,
+    SMART_DEVICES_AND_SWITCHES
+} from './images'
 
 function PopularCategoriesCard({ data }) {
-
+        const navigation = useNavigation()
     return (
-        <View >
-            <ImageBlurLoading
-                borderRadius={8}
-                source={{ uri: data.image, cache: 'force-cache' }}
-                style={CardStyles.image}
-            />
-            <View style={[CardStyles.categoryTextBox]}>
-                <Text ellipsizeMode='tail' numberOfLines={2} style={CardStyles.category}>
-                    {data.category}
-                </Text>
-            </View>
+        <View>
+            <Pressable
+            onPress={()=>{navigation.navigate('products')}}
+            >
+                <ImageBlurLoading
+                    borderRadius={8}
+                    source={{ uri: data.image, cache: 'force-cache' }}
+                    style={CardStyles.image}
+                />
+                <View style={[CardStyles.categoryTextBox]}>
+                    <Text ellipsizeMode='tail' numberOfLines={2} style={CardStyles.category}>
+                        {data.category}
+                    </Text>
+                </View>
+            </Pressable>
         </View>
     );
 }
@@ -43,46 +58,46 @@ const CardStyles = StyleSheet.create({
         textAlign: 'center',
 
     }
-}); 
+});
 
 
 const PopularCategories = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Accessories',
-            image: 'https://placeimg.com/640/480/any'
+            image: ACCESSORIES
         },
         {
             category: 'CCTV Cameras',
-            image: 'https://placeimg.com/640/480/any'
+            image: CCTV_CAMERAS
         },
         {
             category: 'Wi-fi Camera',
-            image: 'https://placeimg.com/640/480/any'
+            image: WIFI_CAMERA
         },
         {
             category: 'Smart watchs',
-            image: 'https://placeimg.com/640/480/any'
+            image: SMART_WATCHES
         },
         {
             category: 'WiFi Router',
-            image: 'https://placeimg.com/640/480/any'
+            image: WIFI_ROUTER
         },
         {
             category: 'Cookers',
-            image: 'https://placeimg.com/640/480/any'
+            image: COOKERS
         },
         {
             category: 'Cables & Adapters',
-            image: 'https://placeimg.com/640/480/any'
+            image: CABLES_AND_ADAPTERS
         },
         {
             category: 'External data storage',
-            image: 'https://placeimg.com/640/480/any'
+            image: EXTERNAL_DATA_STORAGE
         },
         {
             category: 'Smart Devices & Switches',
-            image: 'https://placeimg.com/640/480/any'
+            image: SMART_DEVICES_AND_SWITCHES
         }
     ])
     return (

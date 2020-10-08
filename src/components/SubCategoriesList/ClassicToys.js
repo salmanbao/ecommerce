@@ -1,9 +1,20 @@
 import React from 'react'
-import { Text, StyleSheet,View } from 'react-native'; 
-import {  Colors } from '../../theme'
+import { Text, StyleSheet, View } from 'react-native';
+import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
 import ImageBlurLoading from 'react-native-image-blur-loading';
+import {
+    MOBILE_CHARGING_AND_CABLES,
+    ACCESSORIES,
+    CCTV_CAMERAS,
+    WIFI_CAMERA,
+    CAR_ELECTRICAL_APPLIANCES,
+    WIRELESS_BLUETOOTH,
+    COOKERS,
+    CABLES_AND_ADAPTERS,
+} from './images';
+
 
 function ClassicToysCard({ data }) {
 
@@ -22,7 +33,7 @@ function ClassicToysCard({ data }) {
         </View>
     );
 }
- 
+
 const CardStyles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
@@ -42,54 +53,54 @@ const CardStyles = StyleSheet.create({
         textAlign: 'center',
 
     }
-}); 
+});
 const ClassicToys = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Mobile Charging & Cables',
-            image: 'https://m.media-amazon.com/images/I/31JhE7tZQzL.jpg'
+            image: MOBILE_CHARGING_AND_CABLES
         },
         {
-            category: 'Accessores',
-            image: 'https://image.made-in-china.com/2f0j00raRUIEPHBCqp/Best-Price-Factory-Clear-Stock-Wholesale-Mobile-Phone-Accessories-for-Samsung-Android-Mobile.jpg'
+            category: 'Accessories',
+            image: ACCESSORIES
         },
         {
             category: 'CCTV Cameras',
-            image: 'https://www.vippng.com/png/detail/41-419003_cctv-camera-images-png-cctv-cameras.png'
+            image: CCTV_CAMERAS
         },
         {
             category: 'Wi-fi Camera',
-            image: 'https://www.symbios.pk/image/cache/data/i/intelipcamera_1-500x500.jpg'
+            image: WIFI_CAMERA
         },
         {
             category: 'Car Electrical Appliances',
-            image: 'https://ae01.alicdn.com/kf/HTB1wnOWXyHrK1Rjy0Flq6AsaFXa1.jpg'
+            image: CAR_ELECTRICAL_APPLIANCES
         },
         {
             category: 'Wireless Bluetooth',
-            image: 'https://jinnieworld.net/wp-content/uploads/2019/03/I9-TWS.jpeg'
+            image: WIRELESS_BLUETOOTH
         },
         {
             category: 'Cookers',
-            image: 'https://brain-images-ssl.cdn.dixons.com/1/6/10194261/u_10194261.jpg'
+            image: COOKERS
         },
         {
             category: 'Cables & Adapters',
-            image: 'https://media.startech.com/cms/startech.com/media/images/display-adapter/display-adapter-cables-1.png'
+            image: CABLES_AND_ADAPTERS
         }
     ])
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.sub_container}>
                 <FlatGrid
-                itemDimension={65}
-                data={categories}
-                style={styles.gridView}
-                spacing={5}
-                renderItem={({ item }) => (
-                    <ClassicToysCard data={item} />
-                )}
-            />
+                    itemDimension={65}
+                    data={categories}
+                    style={styles.gridView}
+                    spacing={5}
+                    renderItem={({ item }) => (
+                        <ClassicToysCard data={item} />
+                    )}
+                />
             </View>
         </SafeAreaView>
     )
@@ -104,11 +115,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: Colors.white,
     },
-    sub_container:{
-        marginHorizontal:10
+    sub_container: {
+        marginHorizontal: 10
     },
     gridView: {
         flex: 1,
-        marginTop:10,
+        marginTop: 10,
     },
 })

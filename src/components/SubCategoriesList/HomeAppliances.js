@@ -4,7 +4,11 @@ import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
 import ImageBlurLoading from 'react-native-image-blur-loading';
-
+import {
+    CLEANING_AND_OTHER_HOME_EQUIPMENT,
+    HOME_FRAGRANCES,
+    COOKERS
+} from './images'
 
 function HomeAppliancesCard({ data }) {
 
@@ -50,15 +54,15 @@ const HomeAppliances = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Cleaning & Other Home Equipment',
-            image: 'https://advicesacademy.com/wp-content/uploads/2018/04/Mop.jpg'
+            image: CLEANING_AND_OTHER_HOME_EQUIPMENT
         },
         {
             category: 'Cookers',
-            image: 'https://brain-images-ssl.cdn.dixons.com/1/6/10194261/u_10194261.jpg'
+            image: COOKERS
         },
         {
             category: 'Home Fragrances',
-            image: 'https://cdn.shopify.com/s/files/1/1801/2877/products/home-fragrance-all-four-100-ml_800x.jpg?v=1492042945'
+            image: HOME_FRAGRANCES
         }
     ])
     return (

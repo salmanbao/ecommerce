@@ -3,6 +3,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Transition from '../utils/Transitions';
 
 const Stack = createStackNavigator();
@@ -11,23 +12,25 @@ const screenOptions = {
   ...Transition.transitionBetweenScreenPresets,
 };
 
-const AppNavigator = ()=>{
+const AppNavigator = () => {
   const screenOptions = {
     headerShown: false
   };
-  
+
   return (
-    <NavigationContainer>
-       <Stack.Navigator>
-        <Stack.Screen
-          name="BottomTab"
-          component={BottomTabNavigator}
-          options={screenOptions}
-        />
-    </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="BottomTab"
+            component={BottomTabNavigator}
+            options={screenOptions}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
-  
+
 }
 
 export default AppNavigator

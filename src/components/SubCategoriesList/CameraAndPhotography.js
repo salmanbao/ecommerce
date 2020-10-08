@@ -4,9 +4,13 @@ import ImageBlurLoading from 'react-native-image-blur-loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
 import { Colors } from '../../theme'
-
+import {
+    CCTV_CAMERAS,
+    DIGITAL_CAMERAS,
+    POWER_SUPPLY,
+    WIFI_CAMERA
+} from './images'
 function CameraAndPhotographyCard({ data }) {
-
     return (
         <View >
             <ImageBlurLoading
@@ -49,19 +53,19 @@ const CameraAndPhotography = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'CCTV Cameras',
-            image: 'https://www.vippng.com/png/detail/41-419003_cctv-camera-images-png-cctv-cameras.png'
+            image: CCTV_CAMERAS
         },
         {
             category: 'Digital Cameras',
-            image: 'https://www.bnwcollections.com/image/cache/catalog/canon-eos-r6-mirrorless-digital-camera-with-600mm-f-11-is-stm-lens-price-in-pakistan-img1-800x800-0-.jpg'
+            image: DIGITAL_CAMERAS
         },
         {
             category: 'Power Supply',
-            image: 'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5622/5622834_sd.jpg'
+            image: POWER_SUPPLY
         },
         {
             category: 'Wifi Camera',
-            image: 'https://www.symbios.pk/image/cache/data/i/intelipcamera_1-500x500.jpg'
+            image: WIFI_CAMERA
         }
     ])
     return (

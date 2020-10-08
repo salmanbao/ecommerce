@@ -4,6 +4,7 @@ import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
 import ImageBlurLoading from 'react-native-image-blur-loading';
+import { HEADPHONES, WIRELESS_BLUETOOTH } from './images'
 
 function EarAndHeadPhonesCard({ data }) {
 
@@ -48,11 +49,11 @@ const EarAndHeadPhones = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Headphones',
-            image: 'https://www.switch.pk/wp-content/uploads/2019/03/Wireless-L300-Bluetooth-Headphones-1-600x600.jpg'
+            image: HEADPHONES
         },
         {
             category: 'Wireless Bluetooth',
-            image: 'https://jinnieworld.net/wp-content/uploads/2019/03/I9-TWS.jpeg'
+            image: WIRELESS_BLUETOOTH
         }
     ])
     return (

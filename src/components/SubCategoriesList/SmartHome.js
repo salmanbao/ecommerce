@@ -4,7 +4,12 @@ import ImageBlurLoading from 'react-native-image-blur-loading';
 import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
- 
+import {
+    DOOR_LOCK,
+    LED_LIGHTS_AND_FLASHLIGHTS,
+    SMART_DEVICES_AND_SWITCHES,
+    SMART_HOME_ASSISTANTS_AND_VOICE_CONTROL
+} from './images'
 
 function SmartHomeCard({ data }) {
 
@@ -23,7 +28,7 @@ function SmartHomeCard({ data }) {
         </View>
     );
 }
- 
+
 const CardStyles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
@@ -43,26 +48,26 @@ const CardStyles = StyleSheet.create({
         textAlign: 'center',
 
     }
-}); 
+});
 
 
 const SmartHome = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Door Lock',
-            image: 'https://www.smartify.in/wp-content/uploads/2019/07/Smart-Door-Lock-NFS04.png'
+            image: DOOR_LOCK
         },
         {
             category: 'LED Lights & Flashlights',
-            image: 'https://w7.pngwing.com/pngs/1020/706/png-transparent-streamlight-inc-flashlight-tactical-light-lithium-ion-battery-flashlight-electronics-led-lamp-light.png'
+            image: LED_LIGHTS_AND_FLASHLIGHTS
         },
         {
             category: 'Smart Devices & Switches',
-            image: 'https://www.leviton.com/en/images/lc/600x340+DS+image+2020+family.jpg'
+            image: SMART_DEVICES_AND_SWITCHES
         },
         {
             category: 'Smart Home Assistants & Voice Control',
-            image: 'https://storage.googleapis.com/madebygoog/v1/home/chirp_device-front_on_1440_2x.png'
+            image: SMART_HOME_ASSISTANTS_AND_VOICE_CONTROL
         }
     ])
     return (

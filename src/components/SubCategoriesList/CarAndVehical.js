@@ -1,10 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
-import {  Colors } from '../../theme'
+import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
-
+import {
+    CAR_ELECTRICAL_APPLIANCES,
+    GPS_TRACKER
+} from './images'
 
 function CarAndVehicalCard({ data }) {
 
@@ -23,7 +26,7 @@ function CarAndVehicalCard({ data }) {
         </View>
     );
 }
- 
+
 const CardStyles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
@@ -43,31 +46,31 @@ const CardStyles = StyleSheet.create({
         textAlign: 'center',
 
     }
-}); 
+});
 
 const CarAndVehical = (props) => {
     const [categories, setCategories] = React.useState([
         {
             category: 'Car Electrical Appliances',
-            image: 'https://i.pinimg.com/236x/63/9b/98/639b989541362b58faf21a8852094fe0.jpg'
+            image: CAR_ELECTRICAL_APPLIANCES
         },
         {
             category: 'GPS Tracker',
-            image: 'https://cf.shopee.com.my/file/22815a7bb17aae9c6707d32c3b2b9ba8'
+            image: GPS_TRACKER
         }
     ])
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.sub_container}>
                 <FlatGrid
-                itemDimension={65}
-                data={categories}
-                style={styles.gridView}
-                spacing={5}
-                renderItem={({ item }) => (
-                    <CarAndVehicalCard data={item} />
-                )}
-            />
+                    itemDimension={65}
+                    data={categories}
+                    style={styles.gridView}
+                    spacing={5}
+                    renderItem={({ item }) => (
+                        <CarAndVehicalCard data={item} />
+                    )}
+                />
             </View>
         </SafeAreaView>
     )
@@ -82,11 +85,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: Colors.white,
     },
-    sub_container:{
-        marginHorizontal:10
+    sub_container: {
+        marginHorizontal: 10
     },
     gridView: {
         flex: 1,
-        marginTop:10,
+        marginTop: 10,
     },
 })

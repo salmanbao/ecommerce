@@ -10,7 +10,6 @@ import {
     Entypo, FontAwesome, FontAwesome5, Feather, SimpleLineIcons,
     Fontisto, Ionicons
 } from '@expo/vector-icons';
-import Demo from '../../containers/Demo/demo'
 import PopularCategories from './../SubCategoriesList/popularCategories';
 import CameraAndPhotography from '../SubCategoriesList/CameraAndPhotography';
 import CarAndVehical from './../SubCategoriesList/CarAndVehical';

@@ -5,21 +5,23 @@ import Slider from '../../components/TopSlider/Slider';
 import IconMenuComponent from '../../components/IconMenu/IconMenu';
 import FlashDealsComponent from './../../components/FlashDeals/FlashDeals';
 import TopRankingsComponent from './../../components/TopRankings/TopRankings';
-import { SafeAreaView, FlatList } from 'react-native';
+import { SafeAreaView, FlatList, StatusBar } from 'react-native';
 import CategoriesComponent from '../../components/Categories/Catogories';
 import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
+
 
 const HomeContainer = () => {
 
   return (
     <SafeAreaView style={Sliderstyles.safeArea}>
+      <StatusBar translucent barStyle="dark-content" />
       <SearchComponent />
       <FlatList
         style={{ width: '100%' }}
         nestedScrollEnabled
         data={['slider', 'menus', 'deals', 'topranks', 'categories', 'products']}
         keyExtractor={(data) => data}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           switch (item) {
             case 'slider':
               return <Slider />;
@@ -45,4 +47,3 @@ const HomeContainer = () => {
 }
 
 export default HomeContainer
-
