@@ -13,7 +13,7 @@ const HomeNavigator = () => (
       options={null}
     />
     <Stack.Screen
-      name="categories"
+      name="all_categories"
       component={CategoriesNavigator}
       options={null}
     />
@@ -21,4 +21,4 @@ const HomeNavigator = () => (
 );
 
 export default HomeNavigator;
- 
+  

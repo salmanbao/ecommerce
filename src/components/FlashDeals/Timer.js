@@ -15,8 +15,7 @@ export default function TimerComponent() {
             clearTimeout(minutesTimer)
         }
     })
-
-
+    
     return (
         <View style={styles.timerRow}>
             <View style={styles.timerBox}>

@@ -5,9 +5,9 @@ import ImageBlurLoading from 'react-native-image-blur-loading';
 export default function ProductCardComponent({ data }) {
 
     return (
-        <View>
+        <View style={{backgroundColor:'white',marginTop:10, borderRadius:8}}>
             <ImageBlurLoading
-                borderRadius={8}
+                // borderRadius={8}
                 source={{ uri: data.image_url,cache: 'force-cache' }}
                 style={styles.image}
             />
@@ -30,9 +30,10 @@ export default function ProductCardComponent({ data }) {
 
 const styles = StyleSheet.create({
     image: {
-        resizeMode: 'cover',
+        resizeMode: 'contain',
         height: 250,
-        width: 170
+        width: 170,
+        marginTop:10
     },
     productTextBox: {
         backgroundColor: 'white',

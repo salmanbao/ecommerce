@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     container: {
     },
     image: {
-        resizeMode: 'center',
+        resizeMode: 'contain',
         height: 100,
         width: 100,
     },

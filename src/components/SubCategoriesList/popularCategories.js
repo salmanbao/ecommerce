@@ -22,7 +22,7 @@ function PopularCategoriesCard({ data }) {
     return (
         <View>
             <Pressable
-            onPress={()=>{navigation.navigate('products')}}
+            onPress={()=>{navigation.navigate('categories')}}
             >
                 <ImageBlurLoading
                     borderRadius={8}

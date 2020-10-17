@@ -22,14 +22,14 @@ export default function CategoryCardComponent({ data }) {
 
 const styles = StyleSheet.create({
     image: {
-        resizeMode: 'cover',
+        resizeMode: 'contain',
         height: 100,
     },
     categoryTextBox: {
         height: 35,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        top: -5,
+        top: -20,
     },
     category: {
         color: 'white',

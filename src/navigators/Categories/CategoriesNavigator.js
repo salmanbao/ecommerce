@@ -1,7 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CategoriesContainer from './../../containers/Categories/Categories';
-import Products from './../../containers/Products/Products';
+import CategoriesScreen from './../../containers/Categories/CategoriesScreen';
+import ProductDetailsContainer from './../../containers/Products/ProductDetails';
+
 const Stack = createStackNavigator();
 
 const CategoriesNavigator = () => (
@@ -12,8 +14,13 @@ const CategoriesNavigator = () => (
       options={null}
     />
     <Stack.Screen
-      name="products"
-      component={Products}
+      name="categories"
+      component={CategoriesScreen}
+      options={null}
+    />
+    <Stack.Screen
+      name="product_details"
+      component={ProductDetailsContainer}
       options={null}
     />
   </Stack.Navigator>

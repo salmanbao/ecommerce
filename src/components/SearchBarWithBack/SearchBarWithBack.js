@@ -58,7 +58,7 @@ export default class SearchBarWithBackComponent extends React.Component {
                     showCancel={true}
                     value={search}
                     cancelButtonProps={{ color: 'black' }}
-                    containerStyle={{ marginVertical: 5, borderRadius: 40, backgroundColor: 'white', height: 30 }}
+                    containerStyle={{ marginVertical: 5, borderRadius: 40, backgroundColor: 'white', height: 30, width: '90%' }}
                     inputContainerStyle={{ borderRadius: 40, backgroundColor: 'white' }}
                     inputStyle={{ borderRadius: 40, backgroundColor: 'white' }}
                 />
