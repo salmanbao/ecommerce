@@ -5,14 +5,14 @@ import createStore from './src/stores';
 import RootScreen from './src/containers/Root/RootScreen'
 import { PersistGate } from 'redux-persist/integration/react'
 
-// const { store, persistor } = createStore()
+const { store, persistor } = createStore()
 
 export default function App() {
   return (
-    // <Provider store={store}>
-      //  <PersistGate loading={null} persistor={persistor}>
-      <RootScreen />
-      // </PersistGate>
-  // </Provider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootScreen />
+      </PersistGate>
+    </Provider>
   );
 }

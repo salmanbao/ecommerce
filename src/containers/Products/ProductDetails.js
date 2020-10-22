@@ -6,7 +6,13 @@ import SearchBarWithBackAndCartComponent from './../../components/SearchBarWithB
 import { Icon, withBadge, ListItem } from 'react-native-elements';
 import Star from 'react-native-star-view';
 import { SwipeablePanel } from 'rn-swipeable-panel';
-import { SpecItem } from './specItems';
+import { SpecItem, Specifications } from './specItems';
+import { Seperator } from './seperator';
+import { Coupon } from './Coupon';
+import { Shipping } from './Shipping';
+import { CustomerReview } from './CustomerReview';
+import { SellerRecommendation } from './SellerRecommendation';
+import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
 
 const ProductDetailsContainer = ({ route, navigation }) => {
   const [swipeablePanelActive, setSipeablePanelActive] = useState(false)
@@ -25,7 +31,6 @@ const ProductDetailsContainer = ({ route, navigation }) => {
     }
   ])
 
-  console.log(route)
   openPanel = () => {
     setSipeablePanelActive(true)
   };
@@ -35,9 +40,9 @@ const ProductDetailsContainer = ({ route, navigation }) => {
   };
   const BadgedIcon = withBadge(2)(Icon)
   return (
-    <SafeAreaView style={{backgroundColor:'white'}} >
-        <StatusBar translucent barStyle="dark-content" />
-        <SearchBarWithBackAndCartComponent navigation={navigation} />
+    <SafeAreaView style={{ backgroundColor: 'white' }} >
+      <StatusBar translucent barStyle="dark-content" />
+      <SearchBarWithBackAndCartComponent navigation={navigation} />
       <ScrollView>
         <SliderBox
           images={[data.image_url, data.image_url]}
@@ -59,7 +64,7 @@ const ProductDetailsContainer = ({ route, navigation }) => {
           </View>
 
         </View>
-        <View style={styles.row, { marginHorizontal: 15, marginVertical: 5}}>
+        <View style={styles.row, { marginHorizontal: 15, marginVertical: 5 }}>
           <Text numberOfLines={3} style={{ fontSize: 16, color: '#0f0f0f' }} >
             {data.description}
           </Text>
@@ -75,25 +80,39 @@ const ProductDetailsContainer = ({ route, navigation }) => {
         <View style={styles.row, { marginHorizontal: 15 }}>
           {
             list.map((l, i) => (
-              <ListItem key={i} bottomDivider onPress={openPanel}>
+              <ListItem key={i} onPress={openPanel}>
                 <ListItem.Content>
                   <ListItem.Title>{l.name}</ListItem.Title>
                 </ListItem.Content>
+                <ListItem.Chevron />
               </ListItem>
             ))
           }
         </View>
-
-        
+        <Coupon />
+        <Shipping />
+        <CustomerReview />
+        <SellerRecommendation />
+        <HomeProductsComponent />
       </ScrollView>
+
+
       <SwipeablePanel
-          fullWidth
-          isActive={swipeablePanelActive}
-          onClose={closePanel}
-          onPressCloseButton={closePanel}
-        >
-          <SpecItem title={'Specification'} isHeader />
-        </SwipeablePanel>
+        fullWidth
+        isActive={swipeablePanelActive}
+        onClose={closePanel}
+        onPressCloseButton={closePanel}
+        showCloseButton={true}
+      >
+        <SpecItem title={'Specification'} isHeader />
+        <Seperator />
+        <Specifications leftText={'Brand Name'} rightText={'FIGI'} />
+        <Seperator />
+        <Specifications leftText={'Biometrics Technology'} rightText={'Fingerprint Recognition'} />
+        <Seperator />
+        <Specifications leftText={'Front Camera Quantity'} rightText={'1'} />
+
+      </SwipeablePanel>
     </SafeAreaView>
   )
 
@@ -122,5 +141,15 @@ const styles = StyleSheet.create({
   },
   starStyle: {
     height: 20,
+  },
+  configurationItem: {
+    width: '100%',
+    marginBottom: 10,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   }
 })

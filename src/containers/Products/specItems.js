@@ -40,6 +40,7 @@ export const SpecItem = ({
                             },
                         {
                             color: isRed ? 'red' : 'black',
+                            fontSize:18
                         },
                     ]}>
                     {title}
@@ -48,6 +49,25 @@ export const SpecItem = ({
         </TouchableOpacity>
     );
 };
+
+export const Specifications = ({leftText,rightText})=>{
+
+
+    return (
+        <View style={Styles.row}>
+            <Text 
+            numberOfLines={2}
+            style={Styles.leftText}>
+                {leftText}
+            </Text>
+            
+            <Text style={Styles.rightText}>
+                {rightText}
+            </Text>
+        </View>
+    );
+
+}
 
 const Styles = StyleSheet.create({
     itemContainer: {
@@ -67,4 +87,16 @@ const Styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    row:{
+        flex:1,
+        flexDirection:'row',
+        marginHorizontal:15
+    },
+    leftText:{
+        color:'grey',
+        width:'35%'
+    },
+    rightText:{
+        width:'70%'
+    }
 });

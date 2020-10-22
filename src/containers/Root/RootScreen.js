@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import AppNavigator from '../../navigators/AppNavigator';
-// import StartupActions from '../../stores/Startup/Actions';
-
-// import { useDispatch } from 'react-redux';
+import ProductActions from '../../stores/Products/Actions';
+import { useDispatch } from 'react-redux';
 
 const RootScreen = () => {
-  
-  // const dispatch = useDispatch()
+  console.log('Root-Screen')
+  console.log(ProductActions.getAllProducts())
+  const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   dispatch(StartupActions.startup())
-  // }, [])
+  useEffect(() => {
+    dispatch(ProductActions.getAllProducts())
+  }, [])
 
   return (
       <AppNavigator/>
