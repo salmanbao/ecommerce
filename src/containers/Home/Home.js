@@ -10,8 +10,8 @@ import CategoriesComponent from '../../components/Categories/Catogories';
 import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
 
 
-const HomeContainer = () => {
 
+const HomeContainer = () => {
   return (
     <SafeAreaView style={Sliderstyles.safeArea}>
       <StatusBar translucent barStyle="dark-content" />

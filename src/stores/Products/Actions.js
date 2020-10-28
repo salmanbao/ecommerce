@@ -1,7 +1,10 @@
 import { createActions } from 'reduxsauce';
 
 const { Types, Creators } = createActions({
-    getAllProducts: null,
+    getAllProducts: ['page'],
+    getAllProductsSuccess:['products'],
+    getOnSaleProducts:null,
+    OnSaleProducts:['on_sale'],
 })
 
 export const ProductTypes = Types;

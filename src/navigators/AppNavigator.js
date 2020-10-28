@@ -16,7 +16,6 @@ const AppNavigator = () => {
   const screenOptions = {
     headerShown: false
   };
-
   return (
     <SafeAreaProvider>
       <NavigationContainer>

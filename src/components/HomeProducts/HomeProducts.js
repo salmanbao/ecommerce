@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import ProductCardComponent from './ProductCard';
+import createStore from '../../stores';
+import ProductActions from '../../stores/Products/Actions';
+import { useDispatch } from 'react-redux';
+
+
+const { store } = createStore()
 
 export default function HomeProductsComponent() {
+    const dispatch = useDispatch()
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        _fetchAllBeers()
-    }, []);
+        fetchProducts(page)
+    },[data]);
 
-    const _fetchAllBeers = () => {
-        const URL = `https://api.punkapi.com/v2/beers?page=${page}&per_page=5`;
-        fetch(URL)
-            .then(res => res.json())
-            .then(_data => {
-                if (page === 1)
-                    setData(_data)
-                else
-                    setData([...data, ..._data])
-                setLoading(false)
-            })
-    };
+    const fetchProducts = (page) => {
+        dispatch(ProductActions.getAllProducts(page))
+        let {products} = store.getState()
+        setData(products['products'])
+    }
 
     const renderItem = ({ item }) => {
         return (
@@ -56,15 +55,14 @@ export default function HomeProductsComponent() {
 
     const handleLoadMore = () => {
         setPage(page + 1)
-        setLoading(true)
         setLoadingMore(true)
-        _fetchAllBeers()
+        fetchProducts(page)
     };
 
     const handleRefresh = () => {
         setPage(1)
         setRefreshing(true)
-        _fetchAllBeers()
+        fetchProducts(page)
     };
 
     return (
@@ -79,16 +77,16 @@ export default function HomeProductsComponent() {
                 horizontal={false}
                 nestedScrollEnabled
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item,index) => String(index)}
                 columnWrapperStyle={{
                     justifyContent: 'space-around',
                 }}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.5}
-            initialNumToRender={10}
-            onRefresh={handleRefresh}
-            refreshing={refreshing}
-            ListFooterComponent={renderFooter}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.5}
+                initialNumToRender={10}
+                onRefresh={handleRefresh}
+                refreshing={refreshing}
+                ListFooterComponent={renderFooter}
             />
         </View>
     );

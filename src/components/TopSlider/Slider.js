@@ -6,12 +6,15 @@ import { sliderWidth, itemWidth } from '../../theme/slideEntryStyles';
 import SliderEntry from './sliderEntry';
 import styles, { colors } from '../../theme/sliderStyles';
 import { ENTRIES1 } from '../../utils/entries';
+import { useDispatch } from 'react-redux';
+
 const SLIDER_1_FIRST_ITEM = 1;
 
 export default class Slider extends Component {
 
     constructor(props) {
         super(props);
+        // this.dispatch = useDispatch()
         this.state = {
             slider1ActiveSlide: SLIDER_1_FIRST_ITEM
         };
@@ -70,16 +73,16 @@ export default class Slider extends Component {
     }
 
 
-    get gradient() {
-        return (
-            <LinearGradient
-                colors={[colors.background1, colors.background2]}
-                startPoint={{ x: 1, y: 0 }}
-                endPoint={{ x: 0, y: 1 }}
-                style={styles.gradient}
-            />
-        );
-    }
+    // get gradient() {
+    //     return (
+    //         <LinearGradient
+    //             colors={[colors.background1, colors.background2]}
+    //             startPoint={{ x: 1, y: 0 }}
+    //             endPoint={{ x: 0, y: 1 }}
+    //             style={styles.gradient}
+    //         />
+    //     );
+    // }
 
     render() {
         const slider = this.MainSlider();

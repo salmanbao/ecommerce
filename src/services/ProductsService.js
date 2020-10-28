@@ -11,16 +11,25 @@ var WCAPI = new WooCommerceAPI({
   queryStringAuth: true
 });
 
-export const GetAllProducts = () => {
+export const GetAllProducts = (page) => {
   return new Promise((resolve, reject) => {
-    console.log('Product Service')
-    WCAPI.get('products',{per_page:20})
-    .then(data => {
-      console.log(data.length);
-      resolve(data)
-    })
+    WCAPI.get('products', { page })
+      .then(data => {
+        resolve(data)
+      })
       .catch(err => {
-        console.error(err);
+        reject(err)
+      })
+  })
+}
+
+export const SalesProducts = () => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get('products', { on_sale: true, per_page: 5 })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
         reject(err)
       })
   })
@@ -30,4 +39,5 @@ export const GetAllProducts = () => {
 
 export const ProductsService = {
   GetAllProducts,
+  SalesProducts  
 }
