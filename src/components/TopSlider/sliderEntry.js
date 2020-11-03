@@ -13,58 +13,59 @@ export default class SliderEntry extends Component {
         parallaxProps: PropTypes.object
     };
 
-    get image () {
-        const { data: { illustration }, parallax, parallaxProps, even } = this.props;
+    get image() {
+        const { data: { images }, parallax, parallaxProps, even } = this.props;
 
         return parallax ? (
             <ParallaxImage
-              source={{ uri: illustration }}
-              containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
-              style={styles.image}
-              parallaxFactor={0.35}
-              showSpinner={true}
-              spinnerColor={even ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'}
-              {...parallaxProps}
+                resizeMode={'contain'}
+                source={{ uri: images[0].src }}
+                containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
+                style={styles.image}
+                parallaxFactor={0.35}
+                showSpinner={true}
+                spinnerColor={even ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'}
+                {...parallaxProps}
             />
         ) : (
-            <Image
-              source={{ uri: illustration }}
-              style={styles.image}
-            />
-        );
+                <Image
+                    source={{ uri: images[0].src }}
+                    style={styles.image}
+                />
+            );
     }
 
-    render () {
-        const { data: { title, subtitle }, even } = this.props;
+    render() {
+        const { data: { name }, even } = this.props;
 
-        const uppercaseTitle = title ? (
+        const uppercaseTitle = name ? (
             <Text
-              style={[styles.title, even ? styles.titleEven : {}]}
-              numberOfLines={2}
+                style={[styles.title,  styles.titleEven ]}
+                numberOfLines={2}
             >
-                { title.toUpperCase() }
+                { name.toUpperCase()}
             </Text>
         ) : false;
 
         return (
             <TouchableOpacity
-              activeOpacity={1}
-              style={styles.slideInnerContainer}
-              onPress={() => { console.log(`You've clicked '${title}'`); }}
-              >
+                activeOpacity={1}
+                style={styles.slideInnerContainer}
+                onPress={() => { console.log(`You've clicked '${name}'`); }}
+            >
                 <View style={styles.shadow} />
-                <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
-                    { this.image }
-                    <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
+                <View style={[styles.imageContainer, styles.imageContainerEven]}>
+                    {this.image}
+                    <View style={[styles.radiusMask, styles.radiusMaskEven ]} />
                 </View>
-                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
-                    { uppercaseTitle }
-                    <Text
+                <View style={[styles.textContainer,  styles.textContainerEven ]}>
+                    {uppercaseTitle}
+                    {/* <Text
                       style={[styles.subtitle, even ? styles.subtitleEven : {}]}
                       numberOfLines={2}
                     >
                         { subtitle }
-                    </Text>
+                    </Text> */}
                 </View>
             </TouchableOpacity>
         );

@@ -12,33 +12,6 @@ import AllCategoriesComponent from '../../components/Categories/AllCategories'
 function CustomDrawerContent(props) {
     const [min, onChangeMin] = React.useState('Min.')
     const [max, onChangeMax] = React.useState('Max')
-    const [brands, setBrands] = React.useState([
-        {
-            brand: 'DELL',
-            state: false
-        },
-        {
-            brand: 'HP',
-            state: false
-        },
-        {
-            brand: 'IBM',
-            state: false
-        },
-        {
-            brand: 'SUN',
-            state: false
-        },
-        {
-            brand: 'INTLE',
-            state: false
-        },
-        {
-            brand: 'XEON',
-            state: false
-        }
-
-    ])
     const [shipping, setShipping] = React.useState(false)
     const [rating, setRating] = React.useState(false)
     return (

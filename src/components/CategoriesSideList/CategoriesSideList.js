@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Dimensions } from 'react-native';
 import {
     TabBarVertical,
     TabViewVertical,
     SceneMap
 } from 'react-native-vertical-tab-view';
+import { useDispatch } from 'react-redux';
 import {
     MaterialIcons, Octicons, MaterialCommunityIcons,
     Entypo, FontAwesome, FontAwesome5, Feather, SimpleLineIcons,
@@ -29,41 +30,32 @@ import SunGlasses from '../SubCategoriesList/SunGlasses';
 import Tools from './../SubCategoriesList/Tools';
 import WifiRouter from './../SubCategoriesList/WifiRouter';
 import MobileAccessories from './../SubCategoriesList/MobileAccessories';
+import createStore from '../../stores';
+import ProductActions from '../../stores/Products/Actions';
+
+
+
+const { store } = createStore()
 
 const initialLayout = {
     height: 0,
     width: Dimensions.get('window').width,
 };
 
-class CategoriesSideListComponent extends React.Component {
+export default function CategoriesSideListComponent(props) {
+    const dispatch = useDispatch()
+    const [index, setIndex] = useState(0);
+    const [routes, setRoutes] = useState([
+        { key: 'popular_categories', title: 'Popular Categories', icon: 'star-o', type: 'fontawesome' }
+    ]);
 
+    useEffect(() => {
+        dispatch(ProductActions.getParentCategories())
+        let { products } = store.getState()
+        setRoutes([...routes, ...products['parent_categories']])
+    }, [])
 
-    state = {
-        index: 0,
-        routes: [
-            { key: 'popular_categories', title: 'Popular Categories', icon: 'star-o', type: 'fontawesome' },
-            { key: 'cameras_and_photography', title: 'Cameras & Photography', icon: 'camera', type: 'feather' },
-            { key: 'car_and_vehical_electronics', title: 'Car & Vehical Electronics', icon: 'ios-car', type: 'ionicons' },
-            { key: 'classic_toys', title: 'Classic Toys', icon: 'toys', type: 'material' },
-            { key: 'earphones_and_headphones', title: 'Earphones & Headphones', icon: 'headphones', type: 'feather' },
-            { key: 'electronics', title: 'Electronics', icon: 'electronjs', type: 'fontisto' },
-            { key: 'game_pad', title: 'Game Pad', icon: 'game-controller', type: 'simpleicons' },
-            { key: 'health_care_products', title: 'Health Care Products', icon: 'heart', type: 'feather' },
-            { key: 'home_appliances', title: 'Home Appliances', icon: 'home', type: 'octicons' },
-            { key: 'iphone_and_accessories', title: 'Iphone & Accessories', icon: 'phone-iphone', type: 'material' },
-            { key: 'laptops_and_computers', title: 'Laptops & Computers', icon: 'md-laptop', type: 'ionicons' },
-            { key: 'mobile_phone_and_accessories', title: 'Mobile Phone & Accessories', icon: 'old-mobile', type: 'entypo' },
-            { key: 'networking', title: 'Networking', icon: 'network-wired', type: 'font-awesome-5' },
-            { key: 'pest_control', title: 'Pest Control', icon: 'bee', type: 'materialcommunity' },
-            { key: 'play_station', title: 'Play Station', icon: 'playstation', type: 'font-awesome-5' },
-            { key: 'smart_home', title: 'Smart Home', icon: 'home-assistant', type: 'materialcommunity' },
-            { key: 'sunglasses', title: 'Sunglasses', icon: 'sunglasses', type: 'materialcommunity' },
-            { key: 'tools', title: 'Tools', icon: 'tools', type: 'entypo' },
-            { key: 'wifi_router', title: 'WIFI Router', icon: 'wifi', type: 'feather' },
-        ],
-    };
-
-    getIconType(type, icon) {
+    const getIconType = (type, icon) => {
         switch (type) {
             case 'fontawesome':
                 return <FontAwesome name={icon} size={24} color='#333' />
@@ -88,19 +80,16 @@ class CategoriesSideListComponent extends React.Component {
         }
     }
 
-    renderIcon = ({ route }) => (
-        this.getIconType(route.type, route.icon)
+    const renderIcon = ({ route }) => (
+        getIconType(route.type, route.icon)
     );
 
-    _handleIndexChange = index =>
-        this.setState({
-            index,
-        });
+    const _handleIndexChange = index => setIndex(index)
 
-    _renderTabBar = props => (
+    const _renderTabBar = props => (
         <TabBarVertical
             {...props}
-            renderIcon={this.renderIcon}
+            renderIcon={renderIcon}
             scrollEnabled
             indicatorStyle={styles.indicator}
             style={styles.tabbar}
@@ -109,7 +98,7 @@ class CategoriesSideListComponent extends React.Component {
         />
     );
 
-    _renderScene = SceneMap({
+    const _renderScene = SceneMap({
         mobile_phone_and_accessories: MobileAccessories,
         cameras_and_photography: CameraAndPhotography,
         car_and_vehical_electronics: CarAndVehical,
@@ -129,24 +118,20 @@ class CategoriesSideListComponent extends React.Component {
         smart_home: SmartHome,
         game_pad: GamePad,
         tools: Tools,
-
     });
-    render() {
-        return (
-            <TabViewVertical
-                timingConfig={0}
-                springConfig={{ mass: 0 }}
-                style={[styles.container, this.props.style]}
-                navigationState={this.state}
-                renderScene={this._renderScene}
-                renderTabBar={this._renderTabBar}
-                onIndexChange={this._handleIndexChange}
-                initialLayout={initialLayout}
-            />
-        )
-    }
 
-
+    return (
+        <TabViewVertical
+            timingConfig={0}
+            springConfig={{ mass: 0 }}
+            style={[styles.container, props.style]}
+            navigationState={{ index, routes }}
+            renderScene={_renderScene}
+            renderTabBar={_renderTabBar}
+            onIndexChange={_handleIndexChange}
+            initialLayout={initialLayout}
+        />
+    )
 }
 
 const styles = StyleSheet.create({
@@ -176,5 +161,3 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
 });
-
-export default CategoriesSideListComponent

@@ -5,7 +5,6 @@ import createStore from '../../stores';
 import ProductActions from '../../stores/Products/Actions';
 import { useDispatch } from 'react-redux';
 
-
 const { store } = createStore()
 
 export default function HomeProductsComponent() {
@@ -17,12 +16,14 @@ export default function HomeProductsComponent() {
 
     useEffect(() => {
         fetchProducts(page)
-    },[data]);
+    }, [page]);
 
     const fetchProducts = (page) => {
+        setLoadingMore(true)
         dispatch(ProductActions.getAllProducts(page))
-        let {products} = store.getState()
-        setData(products['products'])
+        let { products } = store.getState()
+        setData([...data, ...products['products']])
+        setLoadingMore(false)
     }
 
     const renderItem = ({ item }) => {
@@ -77,7 +78,7 @@ export default function HomeProductsComponent() {
                 horizontal={false}
                 nestedScrollEnabled
                 renderItem={renderItem}
-                keyExtractor={(item,index) => String(index)}
+                keyExtractor={(item, index) => String(index)}
                 columnWrapperStyle={{
                     justifyContent: 'space-around',
                 }}

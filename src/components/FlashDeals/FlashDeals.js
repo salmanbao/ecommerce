@@ -1,32 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Timer from './Timer';
 import ProductCardComponent from './ProductCard';
+import createStore from '../../stores';
 
-const deals = [
-    {
-        off: '-30%',
-        sold: 24,
-        price: 288.54,
-        image: 'https://placeimg.com/640/480/any'
-    },
-    {
-        off: '-30%',
-        sold: 24,
-        price: 288.54,
-        image: 'https://placeimg.com/640/480/any'
-    },
-    {
-        off: '-30%',
-        sold: 24,
-        price: 288.54,
-        image: 'https://placeimg.com/640/480/any'
-    },
-];
+const { store } = createStore()
 
 export default function FlashDealsComponent() {
+    let { products } = store.getState()
+    const [deals, setDeals] = useState([...products['offers']])
+    useEffect(() => {
+    }, [deals]);
+
+
     return (
         <Card containerStyle={styles.card} >
             <View style={styles.cardHeader}>

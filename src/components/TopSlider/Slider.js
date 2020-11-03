@@ -5,20 +5,21 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from '../../theme/slideEntryStyles';
 import SliderEntry from './sliderEntry';
 import styles, { colors } from '../../theme/sliderStyles';
-import { ENTRIES1 } from '../../utils/entries';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import ProductActions from '../../stores/Products/Actions';
 
 const SLIDER_1_FIRST_ITEM = 1;
 
-export default class Slider extends Component {
+class Slider extends Component {
 
     constructor(props) {
-        super(props);
-        // this.dispatch = useDispatch()
+        super(props)
         this.state = {
             slider1ActiveSlide: SLIDER_1_FIRST_ITEM
         };
     }
+
+
 
     _renderItemWithParallax({ item, index }, parallaxProps) {
         return (
@@ -38,7 +39,7 @@ export default class Slider extends Component {
             <View style={styles.sliderContainer}>
                 <Carousel
                     ref={c => this._slider1Ref = c}
-                    data={ENTRIES1}
+                    data={this.props.on_sale}
                     renderItem={this._renderItemWithParallax}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}
@@ -57,7 +58,7 @@ export default class Slider extends Component {
                     onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
                 />
                 <Pagination
-                    dotsLength={ENTRIES1.length}
+                    dotsLength={5}
                     activeDotIndex={slider1ActiveSlide}
                     containerStyle={styles.paginationContainer}
                     dotColor={'rgba(255, 255, 255, 0.92)'}
@@ -73,16 +74,16 @@ export default class Slider extends Component {
     }
 
 
-    // get gradient() {
-    //     return (
-    //         <LinearGradient
-    //             colors={[colors.background1, colors.background2]}
-    //             startPoint={{ x: 1, y: 0 }}
-    //             endPoint={{ x: 0, y: 1 }}
-    //             style={styles.gradient}
-    //         />
-    //     );
-    // }
+    get gradient() {
+        return (
+            <LinearGradient
+                colors={[colors.background1, colors.background2]}
+                startPoint={{ x: 1, y: 0 }}
+                endPoint={{ x: 0, y: 1 }}
+                style={styles.gradient}
+            />
+        );
+    }
 
     render() {
         const slider = this.MainSlider();
@@ -105,3 +106,18 @@ export default class Slider extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    const { on_sale } = state.products;
+    return {
+        on_sale: on_sale
+    };
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         getSliderProducts: () => dispatch(ProductActions.getOnSaleProducts())
+//     }
+// };
+
+export default connect(mapStateToProps, null)(Slider)

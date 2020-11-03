@@ -2,13 +2,18 @@ import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import CategoryCardComponent from './CategoryCard';
 import { FlatGrid } from 'react-native-super-grid';
+import createStore from '../../stores';
+const { store } = createStore()
 
 export default function CategoriesComponent() {
     React.useEffect(() => {
+        let { products } = store.getState()
+        let cat =products['top'].slice(1,9) 
+        setCategories([...cat])
         return () => {
             setCategories([])
         }
-    })
+    },[categories])
     const [categories, setCategories] = React.useState([
         {
             bgColor: '#f57576',

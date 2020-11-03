@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,17 +10,24 @@ import {
     POWER_SUPPLY,
     WIFI_CAMERA
 } from './images'
+import createStore from '../../stores';
+import ProductActions from '../../stores/Products/Actions';
+import { useDispatch } from 'react-redux';
+
+const { store } = createStore()
+
+
 function CameraAndPhotographyCard({ data }) {
     return (
         <View >
             <ImageBlurLoading
                 borderRadius={8}
-                source={{ uri: data.image, cache: 'force-cache' }}
+                source={{ uri: data.image.src, cache: 'force-cache' }}
                 style={CardStyles.image}
             />
             <View style={[CardStyles.categoryTextBox]}>
                 <Text ellipsizeMode='tail' numberOfLines={2} style={CardStyles.category}>
-                    {data.category}
+                    {data.name}
                 </Text>
             </View>
         </View>
@@ -49,25 +56,21 @@ const CardStyles = StyleSheet.create({
 });
 
 
-const CameraAndPhotography = (props) => {
-    const [categories, setCategories] = React.useState([
-        {
-            category: 'CCTV Cameras',
-            image: CCTV_CAMERAS
-        },
-        {
-            category: 'Digital Cameras',
-            image: DIGITAL_CAMERAS
-        },
-        {
-            category: 'Power Supply',
-            image: POWER_SUPPLY
-        },
-        {
-            category: 'Wifi Camera',
-            image: WIFI_CAMERA
+const CameraAndPhotography = ({route}) => {
+    const dispatch = useDispatch()
+
+    const [categories, setCategories] = useState([])
+
+    useEffect(() => {
+        dispatch(ProductActions.getSubCategories(route['id']))
+        let { products } = store.getState()
+        setCategories([...products['sub_categories'][`${route['id'].toString()}`]])
+        console.log(categories)
+        return ()=>{
+            setCategories([])
         }
-    ])
+    }, [categories])
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.sub_container}>
@@ -102,3 +105,4 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
 })
+    

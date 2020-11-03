@@ -1,19 +1,24 @@
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
+import mapCategoriesToImages from './../CategoriesImages/CategoriesImages';
 
 export default function CategoryCardComponent({ data }) {
-
+    let image;
+    if (data.image)
+        image = data['image']['src']
+    if (image === undefined)
+        image = mapCategoriesToImages('dummy')
     return (
         <View >
             <ImageBlurLoading
-            borderRadius={8}
-                source={{ uri: data.image,cache: 'force-cache' }}
+                borderRadius={8}
+                source={{ uri: image, cache: 'force-cache' }}
                 style={styles.image}
             />
-            <View style={[styles.categoryTextBox, { backgroundColor: data.bgColor }]}>
+            <View style={[styles.categoryTextBox, { backgroundColor: '#f57576' }]}>
                 <Text ellipsizeMode='tail' numberOfLines={2} style={styles.category}>
-                    {data.category}
+                    {data.name}
                 </Text>
             </View>
         </View>
@@ -23,6 +28,7 @@ export default function CategoryCardComponent({ data }) {
 const styles = StyleSheet.create({
     image: {
         resizeMode: 'contain',
+        backgroundColor: 'white',
         height: 100,
     },
     categoryTextBox: {

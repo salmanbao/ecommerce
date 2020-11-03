@@ -1,22 +1,19 @@
 import React from "react";
 import { View, Text, ImageBackground, StyleSheet } from 'react-native'
+import mapCategoriesToImages from './../CategoriesImages/CategoriesImages';
 
 export default function ProductCardComponent({ data }) {
-    let type;
-    if (data.increased > 0)
-        type = `${data.increased} increased`;
-    else if (data.interested > 0)
-        type = `${data.interested} interested`;
+    let image;
+    if (data.image)
+        image = data['image']['src']
+    if (image === undefined)
+        image = mapCategoriesToImages('dummy')
     return (
         <View style={styles.container}>
-            <ImageBackground source={{ uri: data.image,cache: 'force-cache' }} style={styles.image} borderRadius={8} />
+            <ImageBackground source={{ uri: image, cache: 'force-cache' }} style={styles.image} borderRadius={8} />
             <Text style={styles.category}>
-                {data.category}
+                {data.name}
             </Text>
-            <Text style={styles.type}>
-                {type}
-            </Text>
-
         </View>
     );
 }
@@ -36,10 +33,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 10,
         fontWeight: "bold",
-    },
-    type:{
-        fontSize:8,
-        textAlign:'center',
-        color:'#f0a500'
     }
 });
