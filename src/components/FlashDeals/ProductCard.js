@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useState} from "react";
 import { View, ImageBackground, Text, StyleSheet } from 'react-native'
 import ProgressBarClassic from 'react-native-progress-bar-classic';
 
 export default function ProductCardComponent({ data }) {
-    const discountPercentage = (((data.regular_price-data.sale_price)/data.regular_price)* 100).toFixed(2)
+    const [discountPercentage] = useState((((data.regular_price - data.sale_price) / data.regular_price) * 100).toFixed(2))
     return (
         <View style={styles.container}>
             <ImageBackground source={{ uri: data.images[0].src, cache: 'force-cache' }} style={styles.image} borderRadius={8} >

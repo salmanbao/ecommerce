@@ -150,16 +150,176 @@ const GetReviewsByProduct = async (id, page = 1) => {
   })
 }
 
+const GetReviewById = async (review_id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`products/reviews${review_id}`)
+      .then(data => {
+        console.log(data)
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+
+const GetCoupons = async (page = 1, search) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get('coupons', {
+      search: search,
+      page
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const GetCouponsById = async (id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`coupons/${id}`, {
+      id
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const GetProductVariationsById = async (id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`products/${id}/variations`, {
+      id
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+
+const GetProductVariationById = async (product_id, variation_id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`products/${product_id}/variations/${variation_id}`, {
+      id
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const GetProductAttributes = async (product_id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`products/attributes/${product_id}`, {
+      id
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const GetProductAttributeTerms = async (attribute_id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`products/attributes/${attribute_id}/terms`, {
+      id
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const GetProductAttributeTerm = async (attribute_id, term_id) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`products/attributes/${attribute_id}/terms/${term_id}`, {
+      id
+    })
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const GetShippingMethods = async () => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get('shipping_methods')
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const placeOrder = async (order) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.post('orders', order)
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const getOrderById = async (orderId) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.get(`orders/${orderId}`, )
+      .then(data => {
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
 
 
 export const ProductsService = {
+  GetProductVariationsById,
+  GetProductAttributeTerms,
+  GetProductAttributeTerm,
+  GetProductVariationById,
   GetProductsByCategory,
+  GetProductAttributes,
+  GetReviewsByProduct,
+  GetShippingMethods,
   PopularCategories,
   ParentCategories,
   GetSubCategories,
+  GetCouponsById,
   GetAllProducts,
   SalesProducts,
   OfferProducts,
   TopCategories,
-  GetReviewsByProduct,
+  GetReviewById,
+  getOrderById,
+  GetCoupons,
+  placeOrder,
 }
