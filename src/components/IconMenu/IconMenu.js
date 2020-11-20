@@ -40,15 +40,15 @@ export default function IconMenuComponent() {
     const navigation = useNavigation();
     const [items, setItems] = React.useState([
         { id: 1, name: 'bars', code: '#f56a79', type: 'font-awesome-5', text: 'Categories', route: 'all_categories' },
-        { id: 2, name: 'shopping-sale', code: '#ffefa0', type: 'fontisto', text: 'Coins & Coupons', route: 'all_categories' },
-        { id: 3, name: 'gift', code: '#99f3bd', type: 'font-awesome-5', text: 'Freebies', route: 'all_categories' },
-        { id: 4, name: 'tag', code: '#ff4b5c', type: 'font-awesome-5', text: 'Slash it', route: 'all_categories' },
+        // { id: 2, name: 'shopping-sale', code: '#ffefa0', type: 'fontisto', text: 'Coins & Coupons', route: 'all_categories' },
+        // { id: 3, name: 'gift', code: '#99f3bd', type: 'font-awesome-5', text: 'Freebies', route: 'all_categories' },
+        // { id: 4, name: 'tag', code: '#ff4b5c', type: 'font-awesome-5', text: 'Slash it', route: 'all_categories' },
         { id: 5, name: 'money-bill-wave', code: '#f0a500', type: 'font-awesome-5', text: 'Coupons Pals', route: 'all_categories' },
-        { id: 6, name: 'money-bill-alt', code: '#848ccf', type: 'font-awesome-5', text: 'Get $20', route: 'all_categories' },
+        // { id: 6, name: 'money-bill-alt', code: '#848ccf', type: 'font-awesome-5', text: 'Get $20', route: 'all_categories' },
         { id: 7, name: 'meteor', code: '#93b5e1', type: 'font-awesome-5', text: 'Featured Brands', route: 'all_categories' },
         { id: 8, name: 'shopping-bag', code: '#3282b8', type: 'font-awesome-5', text: 'Top Selection', route: 'all_categories' },
         { id: 9, name: 'birthday-cake', code: '#a8df65', type: 'font-awesome-5', text: 'New Arrivals', route: 'all_categories' },
-        { id: 10, name: 'shopping-store', code: '#0e9aa7', type: 'fontisto', text: 'Store', route: 'all_categories' }
+        // { id: 10, name: 'shopping-store', code: '#0e9aa7', type: 'fontisto', text: 'Store', route: 'all_categories' }
     ]);
 
     return (

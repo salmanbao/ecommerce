@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { connect, useDispatch } from 'react-redux';
 import ProductsByCategoryCardComponent from './ProductsByCategoryCard';
+import { View, StyleSheet, FlatList, ActivityIndicator, Dimensions } from 'react-native';
+import ProductActions from '../../stores/Products/Actions';
 
-export default function ProductsByCategoryComponent() {
-    const [data, setData] = useState([]);
+function ProductsByCategoryComponent(props) {
+    const dispatch = useDispatch()
+    const [data, setData] = useState(props.products);
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
-    const [loadingMore, setLoadingMore] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        _fetchAllBeers()
-    }, []);
+        return () => {
+            setData([]);
+            setPage(0);
+            setLoadingMore(false);
+            setRefreshing(false)
+        }
+    }, [data]);
 
-    const _fetchAllBeers = () => {
-        const URL = `https://api.punkapi.com/v2/beers?page=${page}&per_page=5`;
-        fetch(URL)
-            .then(res => res.json())
-            .then(_data => {
-                if (page === 1)
-                    setData(_data)
-                else
-                    setData([...data, ..._data])
-                setLoading(false)
-            })
+    const _fetchProducts = () => {
+        dispatch(ProductActions.getProductsByCategory(props.categoryId, page))
     };
 
     const renderItem = ({ item }) => {
@@ -45,7 +43,7 @@ export default function ProductsByCategoryComponent() {
                     paddingVertical: 20,
                     borderTopWidth: 1,
                     marginTop: 10,
-                    marginBottom: 10,
+                    marginBottom: 110,
                     borderColor: 'black'
                 }}
             >
@@ -56,18 +54,20 @@ export default function ProductsByCategoryComponent() {
 
     const handleLoadMore = () => {
         setPage(page + 1)
-        setLoading(true)
+        setLoadingMore(false)
+        _fetchProducts()
         setLoadingMore(true)
-        _fetchAllBeers()
     };
 
     const handleRefresh = () => {
         setPage(1)
         setRefreshing(true)
-        _fetchAllBeers()
+        _fetchProducts()
+        setRefreshing(false)
     };
 
     return (
+        <View style={{ height: Dimensions.get('window').height }}>
             <FlatList
                 data={data}
                 style={styles.gridView}
@@ -79,23 +79,35 @@ export default function ProductsByCategoryComponent() {
                 columnWrapperStyle={{
                     justifyContent: 'space-around',
                 }}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.5}
-            initialNumToRender={10}
-            onRefresh={handleRefresh}
-            refreshing={refreshing}
-            ListFooterComponent={renderFooter}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.5}
+                initialNumToRender={10}
+                onRefresh={handleRefresh}
+                refreshing={refreshing}
+                ListFooterComponent={renderFooter}
             />
+        </View>
     );
 }
+
+function mapStateToProps(state) {
+    const { productsByCategory } = state.products;
+    const { categoryId } = state.products;
+    return {
+        products: productsByCategory[categoryId] || []
+    };
+}
+
+export default connect(mapStateToProps, null)(ProductsByCategoryComponent)
 
 
 const styles = StyleSheet.create({
     gridView: {
-        display:'flex',
-        flexDirection:'column',
+        display: 'flex',
+        flexDirection: 'column',
         marginHorizontal: 10,
-        marginVertical:10
+        marginTop: 20,
+        marginBottom: 150,
     },
     cardHeading: {
         marginTop: 10,

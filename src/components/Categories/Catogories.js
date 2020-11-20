@@ -2,64 +2,21 @@ import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import CategoryCardComponent from './CategoryCard';
 import { FlatGrid } from 'react-native-super-grid';
-import createStore from '../../stores';
-const { store } = createStore()
+import { useStore } from 'react-redux';
 
 export default function CategoriesComponent() {
+    const store = useStore()
+    let { products } = store.getState()
+    const [categories, setCategories] = React.useState(products['top'].slice(1, 9))
     React.useEffect(() => {
-        let { products } = store.getState()
-        let cat =products['top'].slice(1,9) 
-        setCategories([...cat])
         return () => {
             setCategories([])
         }
-    },[categories])
-    const [categories, setCategories] = React.useState([
-        {
-            bgColor: '#f57576',
-            category: 'Digital Storage',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#dc696a',
-            category: 'For Audio & Visual Enthusiam',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#c45d5e',
-            category: 'Wireless & Quick Charge',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#ab5152',
-            category: 'Health Monitoring',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#934646',
-            category: 'Shoes',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#7a3a3b',
-            category: 'Garden',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#622e2f',
-            category: 'Watches',
-            image: 'https://placeimg.com/640/480/any'
-        },
-        {
-            bgColor: '#492323',
-            category: 'Home & Garden',
-            image: 'https://placeimg.com/640/480/any'
-        },
-    ])
+    }, [])
     return (
         <View>
             <Text style={styles.cardHeading}>
-                Featured Categories
+                Featured Categories 
             </Text>
             <FlatGrid
                 itemDimension={80}
@@ -73,7 +30,6 @@ export default function CategoriesComponent() {
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     gridView: {

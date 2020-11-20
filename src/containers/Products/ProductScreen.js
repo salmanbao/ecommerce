@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { View, Text, StyleSheet, Dimensions, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-navigation'
 import { Divider, Button } from 'react-native-elements';
@@ -7,7 +7,7 @@ import {
     createDrawerNavigator,
     DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import AllCategoriesComponent from '../../components/Categories/AllCategories'
+import AllProductsByCategory from '../../components/Products/AllProductsByCategory'
 
 function CustomDrawerContent(props) {
     const [min, onChangeMin] = React.useState('Min.')
@@ -27,17 +27,18 @@ function CustomDrawerContent(props) {
                         <RNChipView
                             title={'Accessories'}
                             avatar={false}
-                            titleStyle={[{ fontSize: 14, fontWeight: '200' }, { color: '#f56a79' }]}
+                            titleStyle={{ fontSize: 14, fontWeight: '200', color: '#f56a79' }}
                             selectable={true}
-                            selectableStyle={[styles.selectableIconStyle, {
+                            selectableStyle={{
+                                ...styles.selectableIconStyle,
                                 top: 7,
                                 left: 22,
                                 height: 20,
                                 width: 20
-                            }]}
+                            }}
                             borderRadius={5}
                             height={35}
-                            containerStyle={[styles.selectableContainerStyle, { width: 150 }]}
+                            containerStyle={{ ...styles.selectableContainerStyle, width: 150 }}
                         />
                     </View>
                     <Text>
@@ -53,24 +54,26 @@ function CustomDrawerContent(props) {
                                 setShipping(!shipping);
                             }}
                             avatar={false}
-                            titleStyle={[{ fontSize: 14, fontWeight: '200' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                            titleStyle={{ fontSize: 14, fontWeight: '200' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                             selectable={shipping ? true : false}
-                            selectableStyle={shipping ? [styles.selectableIconStyle, {
+                            selectableStyle={shipping ? {
+                                ...styles.selectableIconStyle,
                                 top: 7,
                                 left: 10,
                                 height: 20,
                                 width: 20
-                            }] : null}
+                            } : null}
                             cancelable={!shipping ? true : false}
-                            cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
+                            cancelableStyle={!shipping ? {
+                                ...styles.cancelableIconStyle,
                                 top: 7,
                                 left: 10,
                                 height: 20,
                                 width: 20,
-                            }] : null}
+                            } : null}
                             borderRadius={5}
                             height={35}
-                            containerStyle={shipping ? [styles.selectableContainerStyle, { width: 125 }] : [styles.cancelableContainerStyle, { width: 125 }]}
+                            containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 125 } : { ...styles.cancelableContainerStyle, width: 125 }}
                         />
 
                         <RNChipView
@@ -79,24 +82,26 @@ function CustomDrawerContent(props) {
                                 setRating(!rating);
                             }}
                             avatar={false}
-                            titleStyle={[{ fontSize: 14, fontWeight: '200' }, rating ? { color: '#f56a79' } : { color: 'grey' }]}
+                            titleStyle={{ fontSize: 14, fontWeight: '200' }, rating ? { color: '#f56a79' } : { color: 'grey' }}
                             selectable={rating ? true : false}
-                            selectableStyle={rating ? [styles.selectableIconStyle, {
+                            selectableStyle={rating ? {
+                                ...styles.selectableIconStyle,
                                 top: 7,
                                 left: 26,
                                 height: 20,
                                 width: 20
-                            }] : null}
+                            } : null}
                             cancelable={!rating ? true : false}
-                            cancelableStyle={!rating ? [styles.cancelableIconStyle, {
+                            cancelableStyle={!rating ?  {
+                                ...styles.cancelableIconStyle,
                                 top: 7,
                                 left: 26,
                                 height: 20,
                                 width: 20,
-                            }] : null}
+                            } : null}
                             borderRadius={5}
                             height={35}
-                            containerStyle={rating ? [styles.selectableContainerStyle, { width: 125 }] : [styles.cancelableContainerStyle, { width: 125 }]}
+                            containerStyle={rating ? { ...styles.selectableContainerStyle, width: 125 } : { ...styles.cancelableContainerStyle, width: 125 }}
                         />
                     </View>
                     <Text>
@@ -113,26 +118,28 @@ function CustomDrawerContent(props) {
                                     setBrands(!shipping);
                                 }}
                                 avatar={false}
-                                titleStyle={[{ fontSize: 10, fontWeight: '500', textAlign: 'center' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                                titleStyle={{ fontSize: 10, fontWeight: '500', textAlign: 'center' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                                 selectable={shipping ? true : false}
-                                selectableStyle={shipping ? [styles.selectableIconStyle, {
+                                selectableStyle={shipping ? {
+                                    ...styles.selectableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20
-                                }] : null}
+                                } : null}
                                 subContentContainerStyle={{ marginLeft: '25%', width: 50 }}
                                 cancelable={!shipping ? true : false}
-                                cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
+                                cancelableStyle={!shipping ?  {
+                                    ...styles.cancelableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20,
-                                }] : null}
+                                } : null}
                                 borderRadius={5}
                                 height={35}
                                 ellipsizeMode={'tail'}
-                                containerStyle={shipping ? [styles.selectableContainerStyle, { width: 75 }] : [styles.cancelableContainerStyle, { width: 75 }]}
+                                containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 75 } : { ...styles.cancelableContainerStyle, width: 75 }}
                             />
                             <RNChipView
                                 title={'INTEL'}
@@ -140,14 +147,15 @@ function CustomDrawerContent(props) {
                                     setShipping(!shipping);
                                 }}
                                 avatar={false}
-                                titleStyle={[{ fontSize: 10, fontWeight: '500', textAlign: 'center' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                                titleStyle={{ fontSize: 10, fontWeight: '500', textAlign: 'center' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                                 selectable={shipping ? true : false}
-                                selectableStyle={shipping ? [styles.selectableIconStyle, {
+                                selectableStyle={shipping ? {
+                                    ...styles.selectableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20
-                                }] : null}
+                                } : null}
                                 subContentContainerStyle={{ marginLeft: '25%', width: 50 }}
                                 cancelable={!shipping ? true : false}
                                 cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
@@ -159,7 +167,7 @@ function CustomDrawerContent(props) {
                                 borderRadius={5}
                                 ellipsizeMode={'tail'}
                                 height={35}
-                                containerStyle={shipping ? [styles.selectableContainerStyle, { width: 75 }] : [styles.cancelableContainerStyle, { width: 75 }]}
+                                containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 75 } : { ...styles.cancelableContainerStyle, width: 75 }}
                             />
                             <RNChipView
                                 title={'IBM'}
@@ -167,14 +175,15 @@ function CustomDrawerContent(props) {
                                     setShipping(!shipping);
                                 }}
                                 avatar={false}
-                                titleStyle={[{ fontSize: 10, fontWeight: '500' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                                titleStyle={{ fontSize: 10, fontWeight: '500' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                                 selectable={shipping ? true : false}
-                                selectableStyle={shipping ? [styles.selectableIconStyle, {
+                                selectableStyle={shipping ? {
+                                    ...styles.selectableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20
-                                }] : null}
+                                } : null}
                                 subContentContainerStyle={{ marginLeft: '25%', width: 50 }}
                                 cancelable={!shipping ? true : false}
                                 cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
@@ -186,7 +195,7 @@ function CustomDrawerContent(props) {
                                 borderRadius={5}
                                 height={35}
                                 ellipsizeMode='tail'
-                                containerStyle={shipping ? [styles.selectableContainerStyle, { width: 75 }] : [styles.cancelableContainerStyle, { width: 75 }]}
+                                containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 75 } : { ...styles.cancelableContainerStyle, width: 75 }}
                             />
                         </View>
                         <View style={styles.row}>
@@ -196,14 +205,15 @@ function CustomDrawerContent(props) {
                                     setShipping(!shipping);
                                 }}
                                 avatar={false}
-                                titleStyle={[{ fontSize: 8, fontWeight: '500' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                                titleStyle={{ fontSize: 8, fontWeight: '500' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                                 selectable={shipping ? true : false}
-                                selectableStyle={shipping ? [styles.selectableIconStyle, {
+                                selectableStyle={shipping ? {
+                                    ...styles.selectableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20
-                                }] : null}
+                                } : null}
                                 subContentContainerStyle={{ marginLeft: '25%', width: 50 }}
                                 cancelable={!shipping ? true : false}
                                 cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
@@ -215,7 +225,7 @@ function CustomDrawerContent(props) {
                                 borderRadius={5}
                                 ellipsizeMode={'tail'}
                                 height={35}
-                                containerStyle={shipping ? [styles.selectableContainerStyle, { width: 75 }] : [styles.cancelableContainerStyle, { width: 75 }]}
+                                containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 75 } : { ...styles.cancelableContainerStyle, width: 75 }}
                             />
                             <RNChipView
                                 title={'ASUS'}
@@ -223,26 +233,28 @@ function CustomDrawerContent(props) {
                                     setShipping(!shipping);
                                 }}
                                 avatar={false}
-                                titleStyle={[{ fontSize: 10, fontWeight: '500', textAlign: 'center' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                                titleStyle={{ fontSize: 10, fontWeight: '500', textAlign: 'center' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                                 selectable={shipping ? true : false}
-                                selectableStyle={shipping ? [styles.selectableIconStyle, {
+                                selectableStyle={shipping ? {
+                                    ...styles.selectableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20
-                                }] : null}
+                                } : null}
                                 subContentContainerStyle={{ marginLeft: '25%', width: 50 }}
                                 cancelable={!shipping ? true : false}
-                                cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
+                                cancelableStyle={!shipping ? {
+                                    ...styles.cancelableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20,
-                                }] : null}
+                                } : null}
                                 borderRadius={5}
                                 ellipsizeMode={'tail'}
                                 height={35}
-                                containerStyle={shipping ? [styles.selectableContainerStyle, { width: 75 }] : [styles.cancelableContainerStyle, { width: 75 }]}
+                                containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 75 } : { ...styles.cancelableContainerStyle, width: 75 }}
                             />
                             <RNChipView
                                 title={'APPLE'}
@@ -250,26 +262,28 @@ function CustomDrawerContent(props) {
                                     setShipping(!shipping);
                                 }}
                                 avatar={false}
-                                titleStyle={[{ fontSize: 10, fontWeight: '500' }, shipping ? { color: '#f56a79' } : { color: 'grey' }]}
+                                titleStyle={{ fontSize: 10, fontWeight: '500' }, shipping ? { color: '#f56a79' } : { color: 'grey' }}
                                 selectable={shipping ? true : false}
-                                selectableStyle={shipping ? [styles.selectableIconStyle, {
+                                selectableStyle={shipping ? {
+                                    ...styles.selectableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20
-                                }] : null}
+                                } : null}
                                 subContentContainerStyle={{ marginLeft: '25%', width: 50 }}
                                 cancelable={!shipping ? true : false}
-                                cancelableStyle={!shipping ? [styles.cancelableIconStyle, {
+                                cancelableStyle={!shipping ? {
+                                    ...styles.cancelableIconStyle,
                                     top: 9,
                                     left: -7,
                                     height: 15,
                                     width: 20,
-                                }] : null}
+                                } : null}
                                 borderRadius={5}
                                 height={35}
                                 ellipsizeMode='tail'
-                                containerStyle={shipping ? [styles.selectableContainerStyle, { width: 75 }] : [styles.cancelableContainerStyle, { width: 75 }]}
+                                containerStyle={shipping ? { ...styles.selectableContainerStyle, width: 75 } : { ...styles.cancelableContainerStyle, width: 75 }}
                             />
                         </View>
                     </View>
@@ -364,12 +378,13 @@ const styles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator();
 
-const Products = ({ navigation }) => (
-
-    <Drawer.Navigator initialRouteName="categories" headerMode="none" drawerPosition={"right"} Options={{ title: 'Hack' }} drawerContent={props => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="categories" component={AllCategoriesComponent} />
-    </Drawer.Navigator>
-)
+const Products = () => {
+    return (
+        <Drawer.Navigator initialRouteName="categories" headerMode="none" drawerPosition={"right"} Options={{ title: 'Hack' }} drawerContent={props => <CustomDrawerContent {...props} />}>
+            <Drawer.Screen name="categories" component={AllProductsByCategory} />
+        </Drawer.Navigator>
+    )
+}
 
 export default Products;
 

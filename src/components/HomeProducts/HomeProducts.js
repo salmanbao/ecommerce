@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { useDispatch,useStore } from 'react-redux';
 import ProductCardComponent from './ProductCard';
-import createStore from '../../stores';
 import ProductActions from '../../stores/Products/Actions';
-import { useDispatch } from 'react-redux';
 
-const { store } = createStore()
 
 export default function HomeProductsComponent() {
     const dispatch = useDispatch()
+    const store = useStore()
     const [data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadingMore] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        fetchProducts(page)
+        if (!data.length)
+            fetchProducts(page)
+        return () => {
+            setData([])
+            setPage(1)
+            setLoadingMore(false)
+            setRefreshing(false)
+        }
     }, [page]);
 
-    const fetchProducts = (page) => {
+    const fetchProducts = async (page) => {
         setLoadingMore(true)
         dispatch(ProductActions.getAllProducts(page))
         let { products } = store.getState()

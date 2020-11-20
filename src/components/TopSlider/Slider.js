@@ -6,7 +6,6 @@ import { sliderWidth, itemWidth } from '../../theme/slideEntryStyles';
 import SliderEntry from './sliderEntry';
 import styles, { colors } from '../../theme/sliderStyles';
 import { connect } from 'react-redux';
-import ProductActions from '../../stores/Products/Actions';
 
 const SLIDER_1_FIRST_ITEM = 1;
 
@@ -18,8 +17,6 @@ class Slider extends Component {
             slider1ActiveSlide: SLIDER_1_FIRST_ITEM
         };
     }
-
-
 
     _renderItemWithParallax({ item, index }, parallaxProps) {
         return (
@@ -72,7 +69,6 @@ class Slider extends Component {
             </View>
         );
     }
-
 
     get gradient() {
         return (

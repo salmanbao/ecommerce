@@ -6,9 +6,9 @@ import HomeContainer from '../../containers/Home/Home'
 const Stack = createStackNavigator();
 
 const HomeNavigator = () => (
-  <Stack.Navigator headerMode='none' initialRouteName="Home">
+  <Stack.Navigator headerMode='none' initialRouteName="home">
     <Stack.Screen
-      name="Home"
+      name="home"
       component={HomeContainer}
       options={null}
     />

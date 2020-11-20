@@ -1,25 +1,33 @@
 import React, { useState } from "react";
+import { connect, useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
 import { Icon, Overlay } from 'react-native-elements';
 import { SliderBox } from "react-native-image-slider-box";
 import { useNavigation } from '@react-navigation/native';
-
+import ProductActions from '../../stores/Products/Actions';
 
 export default function ProductsByCategoryCardComponent({ data }) {
-
+    const dispatch = useDispatch()
     const navigation = useNavigation()
     const [visible, setVisible] = useState(false);
+    const [discountPercentage] = useState((((data.regular_price - data.sale_price) / data.regular_price) * 100).toFixed(2))
+    
 
     const toggleOverlay = () => {
         setVisible(!visible);
     };
 
+    const navigateToDetails = ()=>{
+        dispatch(ProductActions.getProductsByCategory(data.id, 1))
+        navigation.navigate('product_details', { data })
+    }
+
     return (
-        <Pressable onPress={() => { navigation.navigate('product_details', {data}) }}>
+        <Pressable onPress={navigateToDetails}>
             <View style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 8 }}>
                 <ImageBlurLoading
-                    source={{ uri: data.image_url, cache: 'force-cache' }}
+                    source={{ uri: data.images[0].src, cache: 'force-cache' }}
                     style={styles.image}
                 />
                 <View style={[styles.productTextBox]}>
@@ -27,16 +35,18 @@ export default function ProductsByCategoryCardComponent({ data }) {
                         {data.name}
                     </Text>
                     <Text style={styles.price}>
-                        PKR {data.price | 104}
+                        ر.ع {data.price}
                     </Text>
-                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                        <Text style={styles.discountedPrice}>
-                            PKR 1204.43
-                </Text>
-                        <Text style={{ color: 'red', fontSize: 10, marginVertical: 5 }}>
-                            -23%
-                </Text>
-                    </View>
+                    {data.on_sale &&
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Text style={styles.discountedPrice}>
+                                ر.ع {data.regular_price}
+                            </Text>
+                            <Text style={{ color: 'red', fontSize: 10, marginVertical: 5 }}>
+                                {discountPercentage}%
+                                </Text>
+                        </View>
+                    }
 
                     <View style={{ display: 'flex', flexDirection: 'row', marginHorizontal: 8 }}>
                         <View style={styles.TextBoxFooter}>
@@ -47,7 +57,7 @@ export default function ProductsByCategoryCardComponent({ data }) {
                                 size={10}
                             />
                             <Text style={styles.solds}>
-                                4.8 | {data.solds} Sold
+                                {data.rating_count} | {data.total_sales} Sold
                     </Text>
                         </View>
                         <Icon
@@ -58,7 +68,7 @@ export default function ProductsByCategoryCardComponent({ data }) {
                             onPress={toggleOverlay} />
                         <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.modelStyle}>
                             <SliderBox
-                                images={[data.image_url]}
+                                images={[...data.images.map(i => i.src)]}
                                 resizeMode={'contain'}
                                 ImageComponentStyle={styles.modelImage}
                             />

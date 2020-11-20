@@ -20,6 +20,9 @@ export default function TopRankingsComponent() {
     useEffect(() => {
         let { products } = store.getState()
         setData([...products['top'].slice(0,3)])
+        return ()=>{
+            setData([])
+        }
     }, [])
     return (
         <Card containerStyle={styles.card} >

@@ -6,6 +6,7 @@ import SearchBarWithBackAndCartComponent from './../../components/SearchBarWithB
 import { Icon, withBadge, ListItem } from 'react-native-elements';
 import Star from 'react-native-star-view';
 import { SwipeablePanel } from 'rn-swipeable-panel';
+import HTML from 'react-native-render-html';
 import { SpecItem, Specifications } from './specItems';
 import { Seperator } from './seperator';
 import { Coupon } from './Coupon';
@@ -15,27 +16,22 @@ import { SellerRecommendation } from './SellerRecommendation';
 import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
 
 const ProductDetailsContainer = ({ route, navigation }) => {
+  const discountPercentage = (((route.params.data.regular_price - route.params.data.sale_price) / route.params.data.regular_price) * 100).toFixed(2)
   const [swipeablePanelActive, setSipeablePanelActive] = useState(false)
   const [data, setData] = useState(route.params.data)
-  const [rating, setRating] = useState(3.5)
   const [list, setList] = useState([
     {
-      name: 'Specifications',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-      subtitle: 'Vice President'
-    },
-    {
-      name: 'Item description',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-      subtitle: 'Vice Chairman'
+      name: 'Specifications'
     }
   ])
 
-  openPanel = () => {
+  const [ignoredStyles] = useState(['font-family'])
+
+  const openPanel = () => {
     setSipeablePanelActive(true)
   };
 
-  closePanel = () => {
+  const closePanel = () => {
     setSipeablePanelActive(false)
   };
   const BadgedIcon = withBadge(2)(Icon)
@@ -45,7 +41,7 @@ const ProductDetailsContainer = ({ route, navigation }) => {
       <SearchBarWithBackAndCartComponent navigation={navigation} />
       <ScrollView>
         <SliderBox
-          images={[data.image_url, data.image_url]}
+          images={[...data.images.map(i => i.src)]}
           resizeMode={'contain'}
           dotColor={'#f56a79'}
           inactiveDotColor={'black'}
@@ -55,25 +51,25 @@ const ProductDetailsContainer = ({ route, navigation }) => {
         <View style={styles.row, { marginVertical: 10, marginHorizontal: 15 }}>
 
           <View style={styles.row}>
-            <Text style={styles.price}>US ${data.abv}</Text>
-            <Text style={styles.discountedPrice}>US ${data.attenuation_level}</Text>
-            <Text style={{ fontSize: 10, color: 'red', marginLeft: 5, marginTop: 5 }}>-24%</Text>
+            <Text style={styles.price}> ر.ع {data.regular_price}</Text>
+            {data.on_sale &&
+              <View>
+                <Text style={styles.discountedPrice}> ر.ع{data.sale_price}</Text>
+                <Text style={{ fontSize: 10, color: 'red', marginLeft: 5, marginTop: 5 }}>{discountPercentage}%</Text>
+              </View>
+            }
+
           </View>
           <View style={{ position: 'absolute', left: '90%' }}>
             <BadgedIcon type="feather" name="heart" color={'grey'} />
           </View>
 
         </View>
-        <View style={styles.row, { marginHorizontal: 15, marginVertical: 5 }}>
-          <Text numberOfLines={3} style={{ fontSize: 16, color: '#0f0f0f' }} >
-            {data.description}
-          </Text>
-        </View>
 
         <View style={styles.row}>
-          <Star score={rating} style={styles.starStyle, { marginLeft: 15 }} />
+          <Star score={data.rating_count} style={styles.starStyle, { marginLeft: 15 }} />
           <Text style={{ marginTop: 8, marginLeft: 5, fontSize: 12, color: 'grey' }}>
-            {rating} | 59 orders
+            {data.rating_count} | {data.menu_order} orders
         </Text>
         </View>
 
@@ -106,11 +102,12 @@ const ProductDetailsContainer = ({ route, navigation }) => {
       >
         <SpecItem title={'Specification'} isHeader />
         <Seperator />
-        <Specifications leftText={'Brand Name'} rightText={'FIGI'} />
+        <HTML html={data.description} containerStyle={{ marginHorizontal: 10 }} ignoredStyles={ignoredStyles} />
+        {/* <Specifications leftText={'Brand Name'} rightText={'FIGI'} />
         <Seperator />
         <Specifications leftText={'Biometrics Technology'} rightText={'Fingerprint Recognition'} />
         <Seperator />
-        <Specifications leftText={'Front Camera Quantity'} rightText={'1'} />
+        <Specifications leftText={'Front Camera Quantity'} rightText={'1'} /> */}
 
       </SwipeablePanel>
     </SafeAreaView>

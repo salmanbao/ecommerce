@@ -4,14 +4,16 @@ import { Card } from 'react-native-elements';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Timer from './Timer';
 import ProductCardComponent from './ProductCard';
-import createStore from '../../stores';
-
-const { store } = createStore()
+import { useStore } from 'react-redux';
 
 export default function FlashDealsComponent() {
+    const store = useStore()
     let { products } = store.getState()
     const [deals, setDeals] = useState([...products['offers']])
     useEffect(() => {
+        return () => {
+            setDeals([])
+        }
     }, [deals]);
 
 
