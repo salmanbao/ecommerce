@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { connect, useDispatch } from 'react-redux';
+import React, { useState ,useEffect} from "react";
+import { useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
 import { Icon, Overlay } from 'react-native-elements';
@@ -11,15 +11,22 @@ export default function ProductsByCategoryCardComponent({ data }) {
     const dispatch = useDispatch()
     const navigation = useNavigation()
     const [visible, setVisible] = useState(false);
-    const [discountPercentage] = useState((((data.regular_price - data.sale_price) / data.regular_price) * 100).toFixed(2))
-    
+    const [discountPercentage,setDiscount] = useState((((data.regular_price - data.sale_price) / data.regular_price) * 100).toFixed(2))
 
+
+    useEffect(()=>{
+        return ()=>{
+            setVisible(false);
+            setDiscount(null)
+        }
+    })
     const toggleOverlay = () => {
         setVisible(!visible);
     };
 
-    const navigateToDetails = ()=>{
+    const navigateToDetails = () => {
         dispatch(ProductActions.getProductsByCategory(data.id, 1))
+        dispatch(ProductActions.getReviewsByProduct(data.id))
         navigation.navigate('product_details', { data })
     }
 

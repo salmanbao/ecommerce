@@ -19,8 +19,10 @@ const { Types, Creators } = createActions({
     getProductsByCategory: ['id', 'page'],
     ProductsByCategory: ['productsByCategory'],
     getReviewsByProduct: ['id'],
-    ReviewsByProduct: ['reviewsByProduct']
+    ReviewsByProduct: ['reviewsByProduct'],
+    getAllCoupons: null,
+    allCoupons: ['coupons'],
 })
 
 export const ProductTypes = Types;
-export default Creators;
+export default Creators; 

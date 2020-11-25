@@ -1,22 +1,26 @@
-import React,{useState} from "react";
-import { View, ImageBackground, Text, StyleSheet } from 'react-native'
+import React, { useState } from "react";
+import { View, ImageBackground, Text, StyleSheet, Pressable } from 'react-native'
 import ProgressBarClassic from 'react-native-progress-bar-classic';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ProductCardComponent({ data }) {
+    const navigation = useNavigation()
     const [discountPercentage] = useState((((data.regular_price - data.sale_price) / data.regular_price) * 100).toFixed(2))
     return (
         <View style={styles.container}>
-            <ImageBackground source={{ uri: data.images[0].src, cache: 'force-cache' }} style={styles.image} borderRadius={8} >
-                <Text style={styles.offPercentage}>{discountPercentage}%</Text>
-            </ImageBackground>
-            <View style={styles.progressBar}>
-                <ProgressBarClassic solds={data.total_sales} progress={60} />
-            </View>
-            <View>
-                <Text style={styles.price}>
-                    PKR {data.sale_price}
-                </Text>
-            </View>
+            <Pressable onPress={() => { navigation.navigate('product_details', { data }) }}>
+                <ImageBackground source={{ uri: data.images[0].src, cache: 'force-cache' }} style={styles.image} borderRadius={8} >
+                    <Text style={styles.offPercentage}>{discountPercentage}%</Text>
+                </ImageBackground>
+                <View style={styles.progressBar}>
+                    <ProgressBarClassic solds={data.total_sales} progress={60} />
+                </View>
+                <View>
+                    <Text style={styles.price}>
+                        ر.ع {data.sale_price}
+                    </Text>
+                </View>
+            </Pressable>
         </View>
     );
 }

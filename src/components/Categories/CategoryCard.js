@@ -1,26 +1,38 @@
-import React from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import ProductActions from '../../stores/Products/Actions';
 import mapCategoriesToImages from './../CategoriesImages/CategoriesImages';
 
 export default function CategoryCardComponent({ data }) {
-    let image;
-    if (data.image)
-        image = data['image']['src']
-    if (image === undefined)
-        image = mapCategoriesToImages('dummy')
+    const navigation = useNavigation();
+    const dispatch = useDispatch()
+    const [image, setImage] = useState((data.image != undefined) || (data.image != null) ? data['image']['src'] : mapCategoriesToImages('dummy'))
+    const toProducts = () => {
+        dispatch(ProductActions.categoryId(data.id))
+        navigation.navigate('productsByCategories')
+    }
+    useEffect(() => {
+        return () => {
+            setImage('')
+        }
+    },[])
     return (
         <View >
-            <ImageBlurLoading
-                borderRadius={8}
-                source={{ uri: image, cache: 'force-cache' }}
-                style={styles.image}
-            />
-            <View style={[styles.categoryTextBox, { backgroundColor: '#f57576' }]}>
-                <Text ellipsizeMode='tail' numberOfLines={2} style={styles.category}>
-                    {data.name}
-                </Text>
-            </View>
+            <Pressable onPress={toProducts}>
+                <ImageBlurLoading
+                    borderRadius={8}
+                    source={{ uri: image, cache: 'force-cache' }}
+                    style={styles.image}
+                />
+                <View style={[styles.categoryTextBox, { backgroundColor: '#f57576' }]}>
+                    <Text ellipsizeMode='tail' numberOfLines={2} style={styles.category}>
+                        {data.name}
+                    </Text>
+                </View>
+            </Pressable>
         </View>
     );
 }

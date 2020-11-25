@@ -43,7 +43,12 @@ export function* GetProductsByCategory({ id, page }) {
 }
 
 export function* GetReviewsByProduct({ id, page }) {
-    console.log('Saga')
     const reviews = yield call(ProductsService.GetReviewsByProduct, id, page)
     yield put(ProductActions.ReviewsByProduct(reviews))
-}
+} 
+
+
+export function* getAllCoupons() {
+    const coupons = yield call(ProductsService.GetCoupons)
+    yield put(ProductActions.allCoupons(coupons))
+} 

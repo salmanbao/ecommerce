@@ -1,8 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export const Coupon = () => {
+
+const Coupon = ({ coupon }) => {
+
+    if (coupon == null)
+        return null;
+
     return (
         <View style={{ display: 'flex', flexDirection: 'row' }}>
             <View style={styles.column}>
@@ -13,9 +19,9 @@ export const Coupon = () => {
                 </Text>
                     <View style={styles.redBox}>
                         <View style={styles.leftBox}>
-                            <Text style={{ color: 'white', fontSize: 18, fontWeight: '700', marginBottom: 8 }}>PKR 488.23</Text>
-                            <Text style={{ color: 'white', fontSize: 10 }}>Orders over PKR 650.97</Text>
-                            <Text style={{ color: 'white', fontSize: 10 }}>Oct 15, 0.00 PT - Nov 1, 0.00 PT</Text>
+                            <Text style={{ color: 'white', fontSize: 18, fontWeight: '700', marginBottom: 8 }}>{coupon.amount}{coupon.discount_type === 'percent' ? '%' : 'ر.ع'}</Text>
+                            <Text style={{ color: 'white', fontSize: 10 }}>Orders over ر.ع{coupon.minimum_amount}</Text>
+                            <Text style={{ color: 'white', fontSize: 10 }}>{coupon.date_created} - {coupon.date_expires}</Text>
                         </View>
                         <View style={styles.rightBox}>
                             <Button
@@ -34,16 +40,20 @@ export const Coupon = () => {
                             <ListItem.Chevron />
                         </ListItem>
                     </View>
-                    <View style={{ backgroundColor: '#f8efd4', width: '25%', marginLeft: 15, borderRadius: 5 }}>
-                        <Text style={{ color: '#ff4b5c', textAlign: 'center', padding: 5 }}>
-                            PKR 163 Off
-                         </Text>
-                    </View>
                 </View>
             </View>
         </View>
     );
 };
+
+function mapStateToProps({ products }) {
+    const { coupons } = products;
+    return {
+        coupon: coupons.length > 0 ? coupons[0] : null
+    };
+}
+
+export default connect(mapStateToProps, null)(Coupon)
 
 const styles = StyleSheet.create({
     column: {

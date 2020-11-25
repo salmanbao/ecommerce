@@ -50,8 +50,8 @@ function AllCategoriesComponent(props) {
     );
 }
 
-function mapStateToProps(state) {
-    const { categoryId } = state.products;
+function mapStateToProps({ products }) {
+    const { categoryId } = products;
     return {
         categoryId
     };

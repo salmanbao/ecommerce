@@ -134,15 +134,13 @@ const GetProductsByCategory = async (id, page = 1) => {
 
 const GetReviewsByProduct = async (id, page = 1) => {
   return new Promise((resolve, reject) => {
-    console.log('Service')
     WCAPI.get('products/reviews', {
       product: [id],
       status: 'approved',
       page
     })
       .then(data => {
-        console.log(data)
-        resolve({ data, id })
+        resolve(data)
       })
       .catch(err => {
         reject(err)
@@ -154,7 +152,6 @@ const GetReviewById = async (review_id) => {
   return new Promise((resolve, reject) => {
     WCAPI.get(`products/reviews${review_id}`)
       .then(data => {
-        console.log(data)
         resolve(data)
       })
       .catch(err => {
@@ -164,13 +161,14 @@ const GetReviewById = async (review_id) => {
 }
 
 
-const GetCoupons = async (page = 1, search) => {
+const GetCoupons = async (page = 1, search='') => {
   return new Promise((resolve, reject) => {
     WCAPI.get('coupons', {
       search: search,
       page
     })
       .then(data => {
+        console.log('coupons:',data.length)
         resolve(data)
       })
       .catch(err => {
@@ -290,7 +288,7 @@ const placeOrder = async (order) => {
 
 const getOrderById = async (orderId) => {
   return new Promise((resolve, reject) => {
-    WCAPI.get(`orders/${orderId}`, )
+    WCAPI.get(`orders/${orderId}`,)
       .then(data => {
         resolve(data)
       })

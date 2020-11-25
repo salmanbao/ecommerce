@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, StatusBar, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SliderBox } from "react-native-image-slider-box";
@@ -7,16 +7,16 @@ import { Icon, withBadge, ListItem } from 'react-native-elements';
 import Star from 'react-native-star-view';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import HTML from 'react-native-render-html';
-import { SpecItem, Specifications } from './specItems';
+import { SpecItem } from './specItems';
 import { Seperator } from './seperator';
-import { Coupon } from './Coupon';
+import  Coupon  from './Coupon';
 import { Shipping } from './Shipping';
 import { CustomerReview } from './CustomerReview';
-import { SellerRecommendation } from './SellerRecommendation';
+import SellerRecommendation from './SellerRecommendation';
 import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
 
 const ProductDetailsContainer = ({ route, navigation }) => {
-  const discountPercentage = (((route.params.data.regular_price - route.params.data.sale_price) / route.params.data.regular_price) * 100).toFixed(2)
+  const [discountPercentage, setDiscount] = useState((((route.params.data.regular_price - route.params.data.sale_price) / route.params.data.regular_price) * 100).toFixed(2))
   const [swipeablePanelActive, setSipeablePanelActive] = useState(false)
   const [data, setData] = useState(route.params.data)
   const [list, setList] = useState([
@@ -24,8 +24,17 @@ const ProductDetailsContainer = ({ route, navigation }) => {
       name: 'Specifications'
     }
   ])
+  const [ignoredStyles, setFonntFamily] = useState(['font-family'])
 
-  const [ignoredStyles] = useState(['font-family'])
+  useEffect(() => {
+    return () => {
+      setDiscount(null);
+      setSipeablePanelActive(false);
+      setData([]);
+      setList([]);
+      setFonntFamily([])
+    }
+  })
 
   const openPanel = () => {
     setSipeablePanelActive(true)

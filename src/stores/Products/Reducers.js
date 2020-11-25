@@ -3,14 +3,14 @@ import { createReducer } from 'reduxsauce';
 import { ProductTypes } from './Actions';
 
 export const allProducts = (state, action) => {
-    if (state.products)
+    if (action.products) {
+        const allProducts = state.products.length !== 0 ? state.products.concat(action.products) : action.products
+        const unique = [...new Map(allProducts.map(item => [item['id'], item])).values()]
         return ({
             ...state,
-            products: [
-                ...state.products,
-                ...action.products
-            ]
+            products: unique
         })
+    }
     return state;
 }
 
@@ -94,15 +94,25 @@ export const ProductsByCategory = (state, action) => {
 }
 
 export const ReviewsByProduct = (state, action) => {
-    console.log('Reducer')
     if (action.reviewsByProduct)
         return ({
             ...state,
-            reviewsByProduct: action.reviewsByProduct
+            reviews: action.reviewsByProduct
         })
     return state;
 }
 
+export const AllCoupons = (state, action) => {
+    if (action.coupons) {
+        const allCoupons = state.coupons.length !== 0 ? state.coupons.concat(action.coupons) : action.coupons
+        const unique = [...new Map(allCoupons.map(item => [item['id'], item])).values()]
+        return ({
+            ...state,
+            coupons: unique
+        })
+    }
+    return state;
+}
 
 export const ProductReducer = createReducer(INITIAL_STATE, {
     [ProductTypes.ALL_PRODUCTS]: allProducts,
@@ -115,4 +125,5 @@ export const ProductReducer = createReducer(INITIAL_STATE, {
     [ProductTypes.CATEGORY_ID]: CategoryId,
     [ProductTypes.PRODUCTS_BY_CATEGORY]: ProductsByCategory,
     [ProductTypes.REVIEWS_BY_PRODUCT]: ReviewsByProduct,
+    [ProductTypes.ALL_COUPONS]: AllCoupons,
 })

@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { useDispatch,useStore } from 'react-redux';
+import { connect } from 'react-redux';
 import ProductCardComponent from './ProductCard';
 import ProductActions from '../../stores/Products/Actions';
 
 
-export default function HomeProductsComponent() {
-    const dispatch = useDispatch()
-    const store = useStore()
-    const [data, setData] = useState([]);
+function HomeProductsComponent(props) {
+    const [data, setData] = useState([...props.products]);
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadingMore] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        if (!data.length)
-            fetchProducts(page)
         return () => {
             setData([])
-            setPage(1)
+            setPage(0)
             setLoadingMore(false)
             setRefreshing(false)
         }
-    }, [page]);
-
-    const fetchProducts = async (page) => {
-        setLoadingMore(true)
-        dispatch(ProductActions.getAllProducts(page))
-        let { products } = store.getState()
-        setData([...data, ...products['products']])
-        setLoadingMore(false)
-    }
+    }, [data]);
 
     const renderItem = ({ item }) => {
         return (
@@ -39,37 +27,20 @@ export default function HomeProductsComponent() {
     };
 
     const renderFooter = () => {
-        if (loadingMore)
-            return null
-
         return (
-            <View
-                style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: 20,
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    marginTop: 10,
-                    marginBottom: 10,
-                    borderColor: 'black'
-                }}
-            >
-                <ActivityIndicator animating size="large" />
-            </View>
+            <ActivityIndicator animating={loadingMore} size="large" />
         );
     };
 
     const handleLoadMore = () => {
         setPage(page + 1)
-        setLoadingMore(true)
-        fetchProducts(page)
+        props.loadMore(page)
+        setData(props.products)
     };
 
     const handleRefresh = () => {
-        setPage(1)
         setRefreshing(true)
-        fetchProducts(page)
+        setPage(1)
     };
 
     return (
@@ -84,7 +55,7 @@ export default function HomeProductsComponent() {
                 horizontal={false}
                 nestedScrollEnabled
                 renderItem={renderItem}
-                keyExtractor={(item, index) => String(index)}
+                keyExtractor={(item, index) => index.toString()}
                 columnWrapperStyle={{
                     justifyContent: 'space-around',
                 }}
@@ -98,6 +69,24 @@ export default function HomeProductsComponent() {
         </View>
     );
 }
+
+function mapStateToProps(state) {
+    const { products } = state.products;
+    return {
+        products: products.length > 0 ? products : []
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadMore: (page) => {
+            dispatch(ProductActions.getAllProducts(page))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeProductsComponent)
+
 
 
 const styles = StyleSheet.create({

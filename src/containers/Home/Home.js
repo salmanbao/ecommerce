@@ -16,7 +16,9 @@ import ProductActions from '../../stores/Products/Actions';
 const HomeContainer = () => {
   const dispatch = useDispatch()
   const store = useStore()
-
+  
+  dispatch(ProductActions.getAllProducts(1))
+  dispatch(ProductActions.getAllCoupons())
   dispatch(ProductActions.getSaleProducts())
   dispatch(ProductActions.getOfferProducts())
   dispatch(ProductActions.getTopCategories())

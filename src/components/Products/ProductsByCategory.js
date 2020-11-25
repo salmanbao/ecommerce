@@ -90,9 +90,9 @@ function ProductsByCategoryComponent(props) {
     );
 }
 
-function mapStateToProps(state) {
-    const { productsByCategory } = state.products;
-    const { categoryId } = state.products;
+function mapStateToProps({ products }) {
+    const { productsByCategory } = products;
+    const { categoryId } = products;
     return {
         products: productsByCategory[categoryId] || []
     };
