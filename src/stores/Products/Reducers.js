@@ -3,6 +3,7 @@ import { createReducer } from 'reduxsauce';
 import { ProductTypes } from './Actions';
 
 export const allProducts = (state, action) => {
+
     if (action.products) {
         const allProducts = state.products.length !== 0 ? state.products.concat(action.products) : action.products
         const unique = [...new Map(allProducts.map(item => [item['id'], item])).values()]
@@ -72,20 +73,22 @@ export const CategoryId = (state, action) => {
 }
 
 export const ProductsByCategory = (state, action) => {
-    const { data, id } = action.productsByCategory;
+    const { data, id, page } = action.productsByCategory;
     const ids = Object.keys(state.productsByCategory)
     var { productsByCategory } = state;
-    if (ids.includes(id.toString()) && productsByCategory) {
-        const allProducts = state.productsByCategory[id].concat(data)
-        const unique = [...new Map(allProducts.map(item => [item['id'], item])).values()]
-        productsByCategory[id] = unique
+
+    if (page === 1) {
+        productsByCategory[id] = data
         return ({
             ...state,
             productsByCategory
         })
     }
-    else {
-        productsByCategory[id] = data
+
+    if (ids.includes(id.toString()) && productsByCategory) {
+        const allProducts = state.productsByCategory[id].concat(data)
+        const unique = [...new Map(allProducts.map(item => [item['id'], item])).values()]
+        productsByCategory[id] = unique
         return ({
             ...state,
             productsByCategory
@@ -114,6 +117,16 @@ export const AllCoupons = (state, action) => {
     return state;
 }
 
+export const AllAttributes = (state, action) => {
+    if (action.attributes) {
+        return ({
+            ...state,
+            attributes: action.attributes
+        })
+    }
+    return state;
+}
+
 export const ProductReducer = createReducer(INITIAL_STATE, {
     [ProductTypes.ALL_PRODUCTS]: allProducts,
     [ProductTypes.ON_SALE_PRODUCTS]: SalesProducts,
@@ -126,4 +139,5 @@ export const ProductReducer = createReducer(INITIAL_STATE, {
     [ProductTypes.PRODUCTS_BY_CATEGORY]: ProductsByCategory,
     [ProductTypes.REVIEWS_BY_PRODUCT]: ReviewsByProduct,
     [ProductTypes.ALL_COUPONS]: AllCoupons,
+    [ProductTypes.ALL_ATTRIBUTES]: AllAttributes,
 })

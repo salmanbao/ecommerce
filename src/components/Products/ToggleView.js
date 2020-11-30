@@ -6,7 +6,7 @@ import { Button } from 'react-native-elements';
 export default function ToggleViewComponent() {
 
     return (
-        <View style={{ marginLeft: '40%' }}>
+        <View >
             <Button
                 type='clear'
                 onPress={() => { console.log('toggle view button') }}

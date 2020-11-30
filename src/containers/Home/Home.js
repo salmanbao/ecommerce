@@ -24,6 +24,8 @@ const HomeContainer = () => {
   dispatch(ProductActions.getTopCategories())
   dispatch(ProductActions.getParentCategories())
   dispatch(ProductActions.getPopularCategories())
+  dispatch(ProductActions.getAllAttributes())
+  
   const unsubscribe = setTimeout(() => {
     const { products } = store.getState()
     const ids = products['parent_categories'].map(category => category['id'])

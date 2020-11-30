@@ -45,10 +45,19 @@ export function* GetProductsByCategory({ id, page }) {
 export function* GetReviewsByProduct({ id, page }) {
     const reviews = yield call(ProductsService.GetReviewsByProduct, id, page)
     yield put(ProductActions.ReviewsByProduct(reviews))
-} 
-
+}
 
 export function* getAllCoupons() {
     const coupons = yield call(ProductsService.GetCoupons)
     yield put(ProductActions.allCoupons(coupons))
-} 
+}
+
+export function* getAllAttributes() {
+    const attributes = yield call(ProductsService.GetAllAttributes)
+    yield put(ProductActions.allAttributes(attributes))
+}
+
+export function* filterByAttribute({ term_id, category_id }) {
+    const products = yield call(ProductsService.GetProductsByCategory, category_id, 1, term_id)
+    yield put(ProductActions.ProductsByCategory(products))
+}

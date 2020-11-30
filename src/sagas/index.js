@@ -10,7 +10,9 @@ import {
   GetPopularCategories,
   GetProductsByCategory,
   GetReviewsByProduct,
-  getAllCoupons
+  getAllCoupons,
+  getAllAttributes,
+  filterByAttribute
 } from './ProductsSaga'
 
 export default function* root() {
@@ -25,5 +27,7 @@ export default function* root() {
     takeLatest(ProductTypes.GET_PRODUCTS_BY_CATEGORY, GetProductsByCategory),
     takeLatest(ProductTypes.GET_REVIEWS_BY_PRODUCT, GetReviewsByProduct),
     takeLatest(ProductTypes.GET_ALL_COUPONS, getAllCoupons),
+    takeLatest(ProductTypes.GET_ALL_ATTRIBUTES, getAllAttributes),
+    takeLatest(ProductTypes.FILTER_BY_ATTRIBUTE, filterByAttribute),
   ])
 } 

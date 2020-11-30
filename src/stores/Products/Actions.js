@@ -22,6 +22,10 @@ const { Types, Creators } = createActions({
     ReviewsByProduct: ['reviewsByProduct'],
     getAllCoupons: null,
     allCoupons: ['coupons'],
+    getAllAttributes: null,
+    allAttributes: ['attributes'],
+    filterByAttribute: ['term_id', 'category_id'],
+
 })
 
 export const ProductTypes = Types;

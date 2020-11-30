@@ -15,7 +15,7 @@ function SubCategoriesCard({ data }) {
     const [image, setImage] = useState(data.image ? data['image']['src'] : mapCategoriesToImages('dummy'))
     useEffect(() => {
         return () => {
-            setImage('')
+            setImage(null)
         }
     }, [])
 

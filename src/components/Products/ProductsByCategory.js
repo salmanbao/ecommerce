@@ -1,28 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import ProductsByCategoryCardComponent from './ProductsByCategoryCard';
 import { View, StyleSheet, FlatList, ActivityIndicator, Dimensions } from 'react-native';
 import ProductActions from '../../stores/Products/Actions';
 
 function ProductsByCategoryComponent(props) {
-    const dispatch = useDispatch()
-    const [data, setData] = useState(props.products);
     const [page, setPage] = useState(1);
-    const [loadingMore, setLoadingMore] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         return () => {
-            setData([]);
             setPage(0);
             setLoadingMore(false);
             setRefreshing(false)
         }
-    }, [data]);
-
-    const _fetchProducts = () => {
-        dispatch(ProductActions.getProductsByCategory(props.categoryId, page))
-    };
+    }, []);
 
     const renderItem = ({ item }) => {
         return (
@@ -31,51 +24,40 @@ function ProductsByCategoryComponent(props) {
     };
 
     const renderFooter = () => {
-        if (loadingMore)
-            return null
 
         return (
-            <View
-                style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: 20,
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    marginTop: 10,
-                    marginBottom: 110,
-                    borderColor: 'black'
-                }}
-            >
-                <ActivityIndicator animating size="large" />
-            </View>
+            <ActivityIndicator animating={loadingMore} size="large" />
         );
     };
 
     const handleLoadMore = () => {
-        setPage(page + 1)
-        setLoadingMore(false)
-        _fetchProducts()
+        setPage(prevPage => (prevPage + 1))
         setLoadingMore(true)
+        props.loadMore(props.categoryId, page + 1)
+        setTimeout(() => {
+            setLoadingMore(false)
+        }, 5000)
     };
 
     const handleRefresh = () => {
         setPage(1)
         setRefreshing(true)
-        _fetchProducts()
-        setRefreshing(false)
+        props.loadMore(props.categoryId, 1)
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 5000)
     };
 
     return (
         <View style={{ height: Dimensions.get('window').height }}>
             <FlatList
-                data={data}
+                data={props.products}
                 style={styles.gridView}
                 numColumns={2}
                 horizontal={false}
                 nestedScrollEnabled
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item, index) => index.toString()}
                 columnWrapperStyle={{
                     justifyContent: 'space-around',
                 }}
@@ -90,15 +72,23 @@ function ProductsByCategoryComponent(props) {
     );
 }
 
-function mapStateToProps({ products }) {
-    const { productsByCategory } = products;
-    const { categoryId } = products;
+function mapStateToProps(state) {
+    const { productsByCategory } = state.products;
+    const { categoryId } = state.products;
     return {
-        products: productsByCategory[categoryId] || []
+        products: productsByCategory[categoryId].length == 0 ? [] : productsByCategory[categoryId]
     };
 }
 
-export default connect(mapStateToProps, null)(ProductsByCategoryComponent)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadMore: (categoryId, page) => {
+            dispatch(ProductActions.getProductsByCategory(categoryId, page))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsByCategoryComponent)
 
 
 const styles = StyleSheet.create({

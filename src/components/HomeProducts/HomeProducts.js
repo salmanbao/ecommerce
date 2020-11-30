@@ -6,19 +6,17 @@ import ProductActions from '../../stores/Products/Actions';
 
 
 function HomeProductsComponent(props) {
-    const [data, setData] = useState([...props.products]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(2);
     const [loadingMore, setLoadingMore] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         return () => {
-            setData([])
             setPage(0)
             setLoadingMore(false)
             setRefreshing(false)
         }
-    }, [data]);
+    }, []);
 
     const renderItem = ({ item }) => {
         return (
@@ -33,14 +31,21 @@ function HomeProductsComponent(props) {
     };
 
     const handleLoadMore = () => {
-        setPage(page + 1)
+        setPage(prevPage => (prevPage + 1))
+        setLoadingMore(true)
         props.loadMore(page)
-        setData(props.products)
+        setTimeout(() => {
+            setLoadingMore(false)
+        }, 5000)
     };
 
     const handleRefresh = () => {
-        setRefreshing(true)
         setPage(1)
+        setRefreshing(true)
+        props.loadMore(1)
+        setTimeout(() => {
+            setRefreshing(false)
+        }, 5000)
     };
 
     return (
@@ -49,7 +54,7 @@ function HomeProductsComponent(props) {
                 More To Love
                   </Text>
             <FlatList
-                data={data}
+                data={props.products}
                 style={styles.gridView}
                 numColumns={2}
                 horizontal={false}
@@ -72,6 +77,7 @@ function HomeProductsComponent(props) {
 
 function mapStateToProps(state) {
     const { products } = state.products;
+    console.log('lenght:',products.length)
     return {
         products: products.length > 0 ? products : []
     };

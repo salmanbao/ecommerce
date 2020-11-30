@@ -9,5 +9,6 @@ export const INITIAL_STATE = {
     popular_categories: [],
     categoryId: 0,
     reviews: [],
-    coupons:[]
+    coupons:[],
+    attributes:[]
 } 

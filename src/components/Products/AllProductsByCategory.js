@@ -4,21 +4,19 @@ import { Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBarWithBackComponent from '../SearchBarWithBack/SearchBarWithBack';
 import { useNavigation } from '@react-navigation/native';
-import MatchingComponent from './Matching';
-import ToggleViewComponent from './ToggleView';
-import { connect, useDispatch } from 'react-redux';
+// import MatchingComponent from './Matching';
+// import ToggleViewComponent from './ToggleView';
+import { connect } from 'react-redux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import ProductsByCategoryComponent from './ProductsByCategory';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProductActions from '../../stores/Products/Actions';
 
 function AllCategoriesComponent(props) {
-    const dispatch = useDispatch()
     const route_navigation = useNavigation()
     const [categoryId, setCategoryId] = useState(props.categoryId)
     useEffect(() => {
-        if (categoryId)
-            dispatch(ProductActions.getProductsByCategory(categoryId), 1)
+        props.getProductsByCategory(props.categoryId,1)
         return () => {
             setCategoryId(null)
         }
@@ -27,8 +25,8 @@ function AllCategoriesComponent(props) {
         <SafeAreaView style={{ backgroundColor: 'white' }}>
             <SearchBarWithBackComponent navigation={route_navigation} />
             <View style={styles.lists}>
-                <MatchingComponent />
-                <ToggleViewComponent />
+                {/* <MatchingComponent /> */}
+                {/* <ToggleViewComponent /> */}
                 <View style={styles.lists}>
                     <Button
                         type='clear'
@@ -57,7 +55,15 @@ function mapStateToProps({ products }) {
     };
 }
 
-export default connect(mapStateToProps, null)(AllCategoriesComponent)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProductsByCategory: (category_id,page) => {
+            dispatch(ProductActions.getProductsByCategory(category_id,page))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllCategoriesComponent)
 
 
 const styles = StyleSheet.create({
