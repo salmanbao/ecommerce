@@ -15,6 +15,7 @@ function HomeProductsComponent(props) {
             setPage(0)
             setLoadingMore(false)
             setRefreshing(false)
+            props.loadMore(1)
         }
     }, []);
 
@@ -33,7 +34,7 @@ function HomeProductsComponent(props) {
     const handleLoadMore = () => {
         setPage(prevPage => (prevPage + 1))
         setLoadingMore(true)
-        props.loadMore(page)
+        props.loadMore(page+1)
         setTimeout(() => {
             setLoadingMore(false)
         }, 5000)
@@ -77,7 +78,6 @@ function HomeProductsComponent(props) {
 
 function mapStateToProps(state) {
     const { products } = state.products;
-    console.log('lenght:',products.length)
     return {
         products: products.length > 0 ? products : []
     };

@@ -2,12 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import CategoryCardComponent from './CategoryCard';
 import { FlatGrid } from 'react-native-super-grid';
-import { useStore } from 'react-redux';
+import { connect } from 'react-redux';
 
-export default function CategoriesComponent() {
-    const store = useStore()
-    let { products } = store.getState()
-    const [categories, setCategories] = React.useState(products['top'].slice(1, 9))
+function CategoriesComponent(props) {
+    const [categories, setCategories] = React.useState(props.categories)
     React.useEffect(() => {
         return () => {
             setCategories([])
@@ -30,6 +28,18 @@ export default function CategoriesComponent() {
         </View>
     );
 }
+
+function mapStateToProps(state) {
+    const { top } = state.products;
+    return {
+        categories: top.slice(1, 9)
+    };
+}
+
+
+export default connect(mapStateToProps, null)(CategoriesComponent)
+
+
 
 const styles = StyleSheet.create({
     gridView: {

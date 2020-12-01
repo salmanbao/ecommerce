@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useStore } from 'react-redux';
+import { connect } from 'react-redux';
 import { StyleSheet, View, Text, ActivityIndicator, Pressable } from 'react-native';
 import { ListItem, Image, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,9 +7,8 @@ import Star from 'react-native-star-view';
 import { Seperator } from './seperator';
 import HTML from 'react-native-render-html';
 
-export const CustomerReview = () => {
-    const store = useStore();
-    const [{ products: { reviews } }, setReviews] = useState(store.getState())
+const CustomerReview = (props) => {
+    const [reviews , setReviews] = useState(props.reviews)
     const [ignoredStyles, setFontFamily] = useState(['font-family'])
 
     useEffect(() => {
@@ -84,6 +83,16 @@ export const CustomerReview = () => {
         </View>
     );
 };
+
+function mapStateToProps(state) {
+    const { reviews } = state.products;
+    return {
+        reviews
+    };
+}
+
+export default connect(mapStateToProps, null)(CustomerReview)
+
 
 const styles = StyleSheet.create({
     column: {

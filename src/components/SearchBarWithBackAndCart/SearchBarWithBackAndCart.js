@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { SearchBar } from 'react-native-elements';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -6,7 +6,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import { Icon } from 'react-native-elements';
 import Feather from 'react-native-vector-icons/Feather';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useState } from 'react';
 /*
 https://reactnativeelements.com/docs/searchbar
 */
@@ -14,6 +13,12 @@ export default function SearchBarWithBackAndCartComponent({ navigation }) {
     const [search, setSearch] = useState('')
     const [menu, setMenu] = useState(false)
 
+    useEffect(()=>{
+        return ()=>{
+            setSearch('');
+            setMenu(false)
+        }
+    })
     return (
         <View style={styles.search}>
             <Button

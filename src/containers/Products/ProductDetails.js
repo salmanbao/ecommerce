@@ -11,7 +11,7 @@ import { SpecItem } from './specItems';
 import { Seperator } from './seperator';
 import  Coupon  from './Coupon';
 import { Shipping } from './Shipping';
-import { CustomerReview } from './CustomerReview';
+import CustomerReview  from './CustomerReview';
 import SellerRecommendation from './SellerRecommendation';
 import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
 

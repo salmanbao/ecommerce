@@ -5,26 +5,24 @@ import {
     TabViewVertical,
     SceneMap
 } from 'react-native-vertical-tab-view';
-import { useStore } from 'react-redux';
 import {
     MaterialIcons, Octicons, MaterialCommunityIcons,
     Entypo, FontAwesome, FontAwesome5, Feather, SimpleLineIcons,
     Fontisto, Ionicons
 } from '@expo/vector-icons';
 import SubCategories from './SubCategories';
+import { connect } from 'react-redux';
 
 const initialLayout = {
     height: 0,
     width: Dimensions.get('window').width,
 };
 
-export default function CategoriesSideListComponent(props) {
-    const store = useStore()
-    const { products } = store.getState()
+function CategoriesSideListComponent(props) {
     const [index, setIndex] = useState(0);
     const [routes, setRoutes] = useState([
         { key: 'popular_categories', title: 'Popular Categories', icon: 'star-o', type: 'fontawesome' }
-        , ...products['parent_categories']
+        , ...props.categories
     ]);
     const [scenes, setScenes] = useState(Object.fromEntries(routes.map( category => [category.key,SubCategories])))
 
@@ -96,6 +94,17 @@ export default function CategoriesSideListComponent(props) {
         />
     )
 }
+
+
+function mapStateToProps(state) {
+    const { parent_categories } = state.products;
+    return {
+        categories: parent_categories
+    };
+}
+
+export default connect(mapStateToProps, null)(CategoriesSideListComponent)
+
 
 const styles = StyleSheet.create({
     container: {

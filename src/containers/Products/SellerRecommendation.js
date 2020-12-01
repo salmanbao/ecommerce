@@ -39,7 +39,7 @@ const SellerRecommendation = (props) => {
             <FlatList
                 data={products}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
                 horizontal={true}
             />
         </View>
@@ -50,7 +50,7 @@ function mapStateToProps({ products }) {
     return { products: products['products'].slice(0, 5) }
 }
 
-export default connect(mapStateToProps)(SellerRecommendation)
+export default connect(mapStateToProps,null)(SellerRecommendation)
 
 const styles = StyleSheet.create({
     row: {

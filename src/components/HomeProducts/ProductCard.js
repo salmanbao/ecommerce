@@ -5,10 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
 import ProductActions from '../../stores/Products/Actions';
 
-export default function ProductCardComponent({ data }) {
+export default function ProductCardComponent({ data}) {
     const dispatch = useDispatch()
     const navigation = useNavigation();
-
     if (data.id === undefined)
         return null
     return (

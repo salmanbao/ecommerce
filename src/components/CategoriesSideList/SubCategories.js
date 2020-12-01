@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { useStore, useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Colors } from '../../theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatGrid } from 'react-native-super-grid';
@@ -25,7 +25,6 @@ function SubCategoriesCard({ data }) {
     }
     return (
         <Pressable onPress={toProducts}>
-            <View>
                 <ImageBlurLoading
                     borderRadius={8}
                     source={{ uri: image, cache: 'force-cache' }}
@@ -36,7 +35,6 @@ function SubCategoriesCard({ data }) {
                         {data.name}
                     </Text>
                 </View>
-            </View>
         </Pressable>
     );
 }
@@ -62,12 +60,10 @@ const CardStyles = StyleSheet.create({
     }
 });
 
-const SubCategories = ({ route }) => {
-    const store = useStore()
-    const { products } = store.getState()
-    const [categories, setCategories] = (route.key === 'popular_categories')
-        ? useState(products['popular_categories'].slice(0, 9))
-        : useState(products['sub_categories'][route['id']])
+const SubCategories = (props) => {
+    const [categories, setCategories] = (props.route.key === 'popular_categories')
+        ? useState(props.popular_categories.slice(0, 9))
+        : useState(props.sub_categories[props.route['id']])
     useEffect(() => {
         return () => {
             setCategories([])
@@ -88,10 +84,20 @@ const SubCategories = ({ route }) => {
             </View>
         </SafeAreaView>
     )
-
 }
 
-export default SubCategories;
+
+function mapStateToProps({ products }) {
+    const { popular_categories } = products;
+    const { sub_categories } = products;
+    return {
+        popular_categories,
+        sub_categories
+    };
+}
+
+export default connect(mapStateToProps, null)(SubCategories)
+
 
 const styles = StyleSheet.create({
     container: {
