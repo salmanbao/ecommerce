@@ -12,7 +12,9 @@ export default function CategoryCardComponent({ data }) {
     const [image, setImage] = useState((data.image != undefined) || (data.image != null) ? data['image']['src'] : mapCategoriesToImages('dummy'))
     const toProducts = () => {
         dispatch(ProductActions.categoryId(data.id))
-        navigation.navigate('productsByCategories')
+        navigation.navigate('products', {
+            screen: 'productsByCategories'
+        })
     }
     useEffect(() => {
         return () => {

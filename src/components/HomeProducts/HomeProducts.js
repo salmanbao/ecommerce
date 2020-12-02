@@ -15,7 +15,6 @@ function HomeProductsComponent(props) {
             setPage(0)
             setLoadingMore(false)
             setRefreshing(false)
-            props.loadMore(1)
         }
     }, []);
 

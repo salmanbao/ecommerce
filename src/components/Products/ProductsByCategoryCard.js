@@ -27,7 +27,10 @@ export default function ProductsByCategoryCardComponent({ data }) {
     const navigateToDetails = () => {
         dispatch(ProductActions.getProductsByCategory(data.id, 1))
         dispatch(ProductActions.getReviewsByProduct(data.id))
-        navigation.navigate('product_details', { data })
+        navigation.navigate('products', {
+            screen: 'product_details',
+            params: {data}
+        })
     }
 
     return (

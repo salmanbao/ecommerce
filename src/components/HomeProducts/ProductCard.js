@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
 import ProductActions from '../../stores/Products/Actions';
 
-export default function ProductCardComponent({ data}) {
+export default function ProductCardComponent({ data }) {
     const dispatch = useDispatch()
     const navigation = useNavigation();
     if (data.id === undefined)
@@ -13,7 +13,10 @@ export default function ProductCardComponent({ data}) {
     return (
         <Pressable onPress={() => {
             dispatch(ProductActions.getReviewsByProduct(data.id))
-            navigation.navigate('product_details', { data })
+            navigation.push('products', {
+                screen: 'product_details',
+                params: { data }
+            })
         }} style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 8 }}>
             <ImageBlurLoading
                 // borderRadius={8}

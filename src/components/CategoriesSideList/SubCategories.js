@@ -21,7 +21,9 @@ function SubCategoriesCard({ data }) {
 
     const toProducts = () => {
         dispatch(ProductActions.categoryId(data.id))
-        navigation.navigate('productsByCategories')
+        navigation.navigate('products', {
+            screen: 'productsByCategories'
+        })
     }
     return (
         <Pressable onPress={toProducts}>

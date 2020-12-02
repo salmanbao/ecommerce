@@ -27,14 +27,15 @@ const ProductDetailsContainer = ({ route, navigation }) => {
   const [ignoredStyles, setFonntFamily] = useState(['font-family'])
 
   useEffect(() => {
+    setData(route.params.data)
     return () => {
       setDiscount(null);
       setSipeablePanelActive(false);
-      setData([]);
+      setData(null);
       setList([]);
       setFonntFamily([])
     }
-  })
+  },[])
 
   const openPanel = () => {
     setSipeablePanelActive(true)
@@ -96,7 +97,7 @@ const ProductDetailsContainer = ({ route, navigation }) => {
         </View>
         <Coupon />
         <Shipping />
-        <CustomerReview />
+        {/* <CustomerReview /> */}
         <SellerRecommendation />
         <HomeProductsComponent />
       </ScrollView>
