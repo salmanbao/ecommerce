@@ -15,9 +15,9 @@ const SellerRecommendation = (props) => {
                 onPress={() => {
                     navigation.push('products', {
                         screen: 'product_details',
-                        params: { item }
+                        params: { data: item }
                     })
-                }} 
+                }}
                 style={{ display: 'flex', flexDirection: 'column' }}>
                 <Image
                     resizeMode={'contain'}

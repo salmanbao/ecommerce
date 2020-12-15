@@ -15,16 +15,6 @@ const CartNavigator = () => (
       options={null}
       component={null}
     />
-    <Stack.Screen
-      name="custom"
-      options={null}
-      component={null}
-    />
-    <Stack.Screen
-      name="custom"
-      options={null}
-      component={null}
-    />
   </Stack.Navigator>
 );
 

@@ -124,7 +124,7 @@ const GetProductsByCategory = async (id, page = 1, term_id = '') => {
       attribute_term: term_id.toString()
     })
       .then(data => {
-        resolve({ data, id ,page})
+        resolve({ data, id, page })
       })
       .catch(err => {
         reject(err)
@@ -317,6 +317,106 @@ const getOrderById = async (orderId) => {
   })
 }
 
+const registerUser = async (user) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.post(`customers`, user)
+      .then(data => {
+        if (data.code === 'registration-error-email-exists') {
+          resolve({
+            loading: false,
+            email: true,
+            username: false,
+            success: false,
+            message: 'Email already exist'
+          })
+        }
+        else if (data.code === 'registration-error-username-exists') {
+          resolve({
+            loading: false,
+            email: false,
+            username: true,
+            success: false,
+            message: 'Username already exist'
+          })
+        }
+        else {
+          resolve({
+            loading: false,
+            email: false,
+            username: false,
+            success: true,
+            message: 'Registration successfully done'
+          })
+        }
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+const loginUser = async (user) => {
+  return new Promise((resolve, reject) => {
+    fetch(`https://salalahbazaar.com/wp-json/jwt-auth/v1/token`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(data => {
+        data.json().then(
+          response => {
+            console.log(response)
+            const { success, code } = response
+            if (success) {
+              resolve({
+                id: response['data']['id'],
+                token: response['data']['token'],
+                displayName: response['data']['displayName'],
+                email: response['data']['email'],
+                success: true
+              })
+            }
+            else if (code === 'invalid_username') {
+              resolve({
+                success: false,
+                username:true,
+                password:false,
+                message: 'Unkown username. Check again or try your email address'
+              })
+            }
+            else if (code === 'incorrect_password') {
+              resolve({
+                success: false,
+                username:false,
+                password:true,
+                message: 'Incorrect password'
+              })
+            }
+          }
+        )
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+
+const saveShippingAddr = async (address,customerId) => {
+  return new Promise((resolve, reject) => {
+    WCAPI.put(`customers/${customerId}`,address)
+      .then(data => {
+        console.log(data)
+        resolve(data)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
 
 export const ProductsService = {
   GetProductVariationsById,
@@ -331,6 +431,7 @@ export const ProductsService = {
   ParentCategories,
   GetSubCategories,
   GetAllAttributes,
+  saveShippingAddr,
   GetCouponsById,
   GetAllProducts,
   SalesProducts,
@@ -338,6 +439,8 @@ export const ProductsService = {
   TopCategories,
   GetReviewById,
   getOrderById,
+  registerUser,
   GetCoupons,
   placeOrder,
+  loginUser,
 }

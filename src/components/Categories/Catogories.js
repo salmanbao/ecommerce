@@ -4,11 +4,9 @@ import CategoryCardComponent from './CategoryCard';
 import { FlatGrid } from 'react-native-super-grid';
 import { connect } from 'react-redux';
 
-function CategoriesComponent(props) {
-    const [categories, setCategories] = React.useState(props.categories)
+function CategoriesComponent({ categories}) {
     React.useEffect(() => {
         return () => {
-            setCategories([])
         }
     }, [])
     return (

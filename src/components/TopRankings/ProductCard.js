@@ -8,21 +8,21 @@ import mapCategoriesToImages from './../CategoriesImages/CategoriesImages';
 export default function ProductCardComponent({ data }) {
     const navigation = useNavigation();
     const dispatch = useDispatch()
-    const [image, setImage] = useState((data.image != undefined) || (data.image != null) ? data['image']['src'] : mapCategoriesToImages('dummy'))
 
     const toProducts = () => {
         dispatch(ProductActions.categoryId(data.id))
-        navigation.navigate('productsByCategories')
+        navigation.navigate('products', {
+            screen: 'productsByCategories'
+        })
     }
     useEffect(() => {
         return () => {
-            setImage('')
         }
     })
     return (
         <View style={styles.container}>
             <Pressable onPress={toProducts}>
-                <ImageBackground source={{ uri: image, cache: 'force-cache' }} style={styles.image} borderRadius={8} />
+                <ImageBackground source={{ uri: (data.image != undefined) || (data.image != null) ? data['image']['src'] : mapCategoriesToImages('dummy'), cache: 'force-cache' }} style={styles.image} borderRadius={8} />
                 <Text style={styles.category}>
                     {data.name}
                 </Text>

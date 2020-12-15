@@ -8,7 +8,13 @@ export default function ProductCardComponent({ data }) {
     const [discountPercentage] = useState((((data.regular_price - data.sale_price) / data.regular_price) * 100).toFixed(2))
     return (
         <View style={styles.container}>
-            <Pressable onPress={() => { navigation.navigate('product_details', { data }) }}>
+            <Pressable onPress={() => {
+                navigation.navigate('products', {
+                    screen: 'product_details',
+                    params: { data }
+                }
+                )
+            }}>
                 <ImageBackground source={{ uri: data.images[0].src, cache: 'force-cache' }} style={styles.image} borderRadius={8} >
                     <Text style={styles.offPercentage}>{discountPercentage}%</Text>
                 </ImageBackground>
@@ -21,7 +27,7 @@ export default function ProductCardComponent({ data }) {
                     </Text>
                 </View>
             </Pressable>
-        </View>
+        </View >
     );
 }
 

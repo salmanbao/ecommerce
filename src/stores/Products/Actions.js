@@ -25,8 +25,23 @@ const { Types, Creators } = createActions({
     getAllAttributes: null,
     allAttributes: ['attributes'],
     filterByAttribute: ['term_id', 'category_id'],
-
+    addToCart: ['product'],
+    removeFromCart: ['products'],
+    addToWishList: ['wishlist'],
+    currentRoute: ['route'],
+    registerUser: ['register'],
+    registerResponse: ['response'],
+    resetRegisterResponse: null,
+    resetAllRegisterResponse: null,
+    loginUser: ['user'],
+    loginResponse: ['states'],
+    resetLoginResponse: null,
+    logout:null,
+    setAuthToken: ['credentials'],
+    getShippingMethods: null,
+    setShippingMethods: ['methods'],
+    saveShippingAddress: ['address','customerId']
 })
 
 export const ProductTypes = Types;
-export default Creators; 
+export default Creators;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import ProductsByCategoryCardComponent from './ProductsByCategoryCard';
-import { View, StyleSheet, FlatList, ActivityIndicator, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, FlatList, ActivityIndicator, Dimensions } from 'react-native';
 import ProductActions from '../../stores/Products/Actions';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function ProductsByCategoryComponent(props) {
     const [page, setPage] = useState(1);
@@ -49,25 +50,42 @@ function ProductsByCategoryComponent(props) {
     };
 
     return (
-        <View style={{ height: Dimensions.get('window').height }}>
-            <FlatList
-                data={props.products}
-                style={styles.gridView}
-                numColumns={2}
-                horizontal={false}
-                nestedScrollEnabled
-                renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
-                columnWrapperStyle={{
-                    justifyContent: 'space-around',
-                }}
-                onEndReached={handleLoadMore}
-                onEndReachedThreshold={0.5}
-                initialNumToRender={10}
-                onRefresh={handleRefresh}
-                refreshing={refreshing}
-                ListFooterComponent={renderFooter}
-            />
+        <View style={{ height: '100%' }}>
+            {props.products.length > 0 ?
+                <FlatList
+                    data={props.products}
+                    style={styles.gridView}
+                    numColumns={2}
+                    horizontal={false}
+                    nestedScrollEnabled
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => index.toString()}
+                    columnWrapperStyle={{
+                        justifyContent: 'space-around',
+                    }}
+                    onEndReached={handleLoadMore}
+                    onEndReachedThreshold={0.5}
+                    initialNumToRender={10}
+                    onRefresh={handleRefresh}
+                    refreshing={refreshing}
+                    ListFooterComponent={renderFooter}
+                />
+                :
+                <View style={{flex:1}}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+                        <AntDesign
+                            name='bars'
+                            size={100}
+                            color="#e6e6e6"
+                        />
+                    </View>
+
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+                        <Text style={{ color: '#bbbbbb' }}>No products added</Text>
+                    </View>
+
+                </View> 
+            }
         </View>
     );
 }
@@ -76,7 +94,7 @@ function mapStateToProps(state) {
     const { productsByCategory } = state.products;
     const { categoryId } = state.products;
     return {
-        products: productsByCategory[categoryId].length == 0 ? [] : productsByCategory[categoryId]
+        products: productsByCategory[categoryId] === undefined || productsByCategory[categoryId].length > 0  ? [] : productsByCategory[categoryId]
     };
 }
 

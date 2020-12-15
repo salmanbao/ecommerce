@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useStore, useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Sliderstyles from '../../theme/sliderStyles';
 import SearchComponent from '../../components/SearchBar';
 import Slider from '../../components/TopSlider/Slider';
@@ -12,10 +12,8 @@ import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
 import ProductActions from '../../stores/Products/Actions';
 
 
-
 const HomeContainer = () => {
   const dispatch = useDispatch()
-  const store = useStore()
   
   dispatch(ProductActions.getAllProducts(1))
   dispatch(ProductActions.getAllCoupons())
@@ -25,17 +23,9 @@ const HomeContainer = () => {
   dispatch(ProductActions.getParentCategories())
   dispatch(ProductActions.getPopularCategories())
   dispatch(ProductActions.getAllAttributes())
-  
-  const unsubscribe = setTimeout(() => {
-    const { products } = store.getState()
-    const ids = products['parent_categories'].map(category => category['id'])
-    dispatch(ProductActions.getSubCategories(ids))
-  }, 5000)
 
   useEffect(() => {
-
     return () => {
-      clearTimeout(unsubscribe)
     }
   })
   return (

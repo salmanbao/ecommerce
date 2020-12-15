@@ -12,7 +12,11 @@ import {
   GetReviewsByProduct,
   getAllCoupons,
   getAllAttributes,
-  filterByAttribute
+  filterByAttribute,
+  registerUser,
+  loginUser,
+  getShippingMethods,
+  saveShippingAddress
 } from './ProductsSaga'
 
 export default function* root() {
@@ -29,5 +33,9 @@ export default function* root() {
     takeLatest(ProductTypes.GET_ALL_COUPONS, getAllCoupons),
     takeLatest(ProductTypes.GET_ALL_ATTRIBUTES, getAllAttributes),
     takeLatest(ProductTypes.FILTER_BY_ATTRIBUTE, filterByAttribute),
+    takeLatest(ProductTypes.REGISTER_USER, registerUser),
+    takeLatest(ProductTypes.LOGIN_USER, loginUser),
+    takeLatest(ProductTypes.GET_SHIPPING_METHODS, getShippingMethods),
+    takeLatest(ProductTypes.SAVE_SHIPPING_ADDRESS, saveShippingAddress),
   ])
 } 

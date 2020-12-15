@@ -7,7 +7,7 @@ import Star from 'react-native-star-view';
 import { Seperator } from './seperator';
 import HTML from 'react-native-render-html';
 
-const CustomerReview = (props) => {
+const CustomerReview = ({ reviews}) => {
     const [ignoredStyles, setFontFamily] = useState(['font-family'])
 
     useEffect(() => {
@@ -21,11 +21,11 @@ const CustomerReview = (props) => {
 
             <ListItem onPress={() => { console.log('customer review clicked') }}>
                 <ListItem.Content>
-                    <ListItem.Title style={{ fontWeight: '600', fontSize: 16, marginBottom: 5 }}>Customer Reviews ({props.reviews.length})</ListItem.Title>
+                    <ListItem.Title style={{ fontWeight: '600', fontSize: 16, marginBottom: 5 }}>Customer Reviews ({reviews.length})</ListItem.Title>
                     <View style={styles.images}>
 
                         {
-                            props.reviews.map((r) => (
+                            reviews.map((r) => (
                                 <Pressable onPress={() => { console.log('review_id', r.id) }}>
                                     <Image
                                         source={{ uri: r.reviewer_avatar_urls[Object.keys(r.reviewer_avatar_urls)[0]] }}
@@ -56,7 +56,7 @@ const CustomerReview = (props) => {
                 <ListItem.Chevron />
             </ListItem>
             <Seperator />
-            {props.reviews.length > 0 &&
+            {reviews.length > 0 &&
                 <View style={{ display: 'flex', flexDirection: 'column' }}>
 
                     <View style={{
@@ -66,13 +66,13 @@ const CustomerReview = (props) => {
                         marginHorizontal: 15,
                         justifyContent: 'space-between',
                     }}>
-                    <Text style={{ color: 'grey' }}>{props.reviews[0]['reviewer']}</Text>
-                    <Text style={{ color: 'grey' }}>{props.reviews[0]['date_created']}</Text>
+                    <Text style={{ color: 'grey' }}>{reviews[0]['reviewer']}</Text>
+                    <Text style={{ color: 'grey' }}>{reviews[0]['date_created']}</Text>
                     </View>
 
                     <View style={{ display: 'flex', flexDirection: 'column', marginHorizontal: 15, marginVertical: 0 }}>
-                    <Star score={props.reviews[0]['rating']} style={styles.starStyle, { marginLeft: 15 }} />
-                    <HTML html={props.reviews[0]['review']} containerStyle={{ fontSize: 12, marginHorizontal: 10 }} ignoredStyles={ignoredStyles} />
+                    <Star score={reviews[0]['rating']} style={styles.starStyle, { marginLeft: 15 }} />
+                    <HTML html={reviews[0]['review']} containerStyle={{ fontSize: 12, marginHorizontal: 10 }} ignoredStyles={ignoredStyles} />
                         <Text style={{ textDecorationLine: 'underline', color: '#85C1E9', marginTop: 5 }}>View All</Text>
                     </View>
                 </View>

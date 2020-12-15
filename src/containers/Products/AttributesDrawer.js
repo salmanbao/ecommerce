@@ -10,7 +10,6 @@ import {
 import ProductActions from '../../stores/Products/Actions';
 
 function CustomDrawerContent(props) {
-    const dispatch = useDispatch()
     const [min, onChangeMin] = useState('Min.')
     const [max, onChangeMax] = useState('Max')
     const [shipping, setShipping] = useState(false)

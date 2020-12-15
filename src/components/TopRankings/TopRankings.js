@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 import ProductCardComponent from './ProductCard';
-import createStore from '../../stores';
-const { store } = createStore()
+import { connect } from 'react-redux';
+
 
 function ViewMore() {
     return (
@@ -15,13 +15,9 @@ function ViewMore() {
     );
 }
 
-export default function TopRankingsComponent() {
-    const [data, setData] = useState([]);
+function TopRankingsComponent({ categories}) {
     useEffect(() => {
-        let { products } = store.getState()
-        setData([...products['top'].slice(0,3)])
         return ()=>{
-            setData([])
         }
     }, [])
     return (
@@ -34,7 +30,7 @@ export default function TopRankingsComponent() {
             </View>
             <View style={styles.topRankings}>
                 {
-                    data.map((top, index) => {
+                    categories.map((top, index) => {
                         return (
                             <ProductCardComponent key={index} data={top} />
                         );
@@ -44,6 +40,17 @@ export default function TopRankingsComponent() {
         </Card>
     );
 }
+
+function mapStateToProps(state) {
+    const { top } = state.products;
+    return {
+        categories: top.slice(0, 3)
+    };
+}
+
+
+export default connect(mapStateToProps, null)(TopRankingsComponent)
+
 
 
 const styles = StyleSheet.create({

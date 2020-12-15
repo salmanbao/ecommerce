@@ -1,20 +1,23 @@
-import React, { useState,useEffect } from 'react';
-import { SearchBar } from 'react-native-elements';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Platform, StyleSheet, View } from 'react-native';
-import { Button } from 'react-native-elements';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-import { Icon } from 'react-native-elements';
+import { Icon, withBadge, Button, SearchBar } from 'react-native-elements';
 import Feather from 'react-native-vector-icons/Feather';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useNavigation } from '@react-navigation/native';
+
 /*
 https://reactnativeelements.com/docs/searchbar
 */
-export default function SearchBarWithBackAndCartComponent({ navigation }) {
+function SearchBarWithBackAndCartComponent({ navigation,carts}) {
+    // const navigation = useNavigation()
     const [search, setSearch] = useState('')
     const [menu, setMenu] = useState(false)
+    const BadgedIcon = withBadge(carts)(Icon)
 
-    useEffect(()=>{
-        return ()=>{
+    useEffect(() => {
+        return () => {
             setSearch('');
             setMenu(false)
         }
@@ -52,12 +55,17 @@ export default function SearchBarWithBackAndCartComponent({ navigation }) {
                 inputStyle={{ borderRadius: 40, backgroundColor: 'white' }}
             />
 
-            <Icon
-                name='ios-cart'
-                type='ionicon'
-                color='#f50'
-                style={{ marginVertical: 8, marginLeft: 5 }}
-                onPress={() => console.log('hello')} />
+            <BadgedIcon
+             type="ionicon"
+              name="ios-cart" 
+              color={'#f50'} 
+              containerStyle={{ marginVertical: 8, marginLeft: 5 }}
+                onPress={() => {
+                    navigation.navigate('cart_products')
+                }
+            }
+                />
+
             <Icon
                 name='share-outline'
                 type='material-community'
@@ -103,6 +111,12 @@ export default function SearchBarWithBackAndCartComponent({ navigation }) {
         </View>
     );
 }
+
+function mapStateToProps({ products }) {
+    return { carts: products['cart'].length }
+}
+
+export default connect(mapStateToProps, null)(SearchBarWithBackAndCartComponent)
 
 const styles = StyleSheet.create({
     search: {

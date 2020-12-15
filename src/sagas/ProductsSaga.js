@@ -24,7 +24,9 @@ export function* GetTopCategories() {
 
 export function* GetParentCategories() {
     const categories = yield call(ProductsService.ParentCategories)
+    const ids = categories.map(category => category['id'])
     yield put(ProductActions.ParentCategories(categories))
+    yield put(ProductActions.getSubCategories(ids))
 }
 
 export function* GetSubCategories({ ids }) {
@@ -61,3 +63,49 @@ export function* filterByAttribute({ term_id, category_id }) {
     const products = yield call(ProductsService.GetProductsByCategory, category_id, 1, term_id)
     yield put(ProductActions.ProductsByCategory(products))
 }
+
+export function* registerUser({ register }) {
+    yield put(ProductActions.registerResponse({
+        loading: true,
+        email: false,
+        username: false,
+        success: false,
+        message: ''
+    }))
+    const response = yield call(ProductsService.registerUser, register)
+    yield put(ProductActions.registerResponse(response))
+    if (response['success'])
+        yield put(ProductActions.resetRegisterResponse())
+}
+
+export function* loginUser({ user }) {
+    yield put(ProductActions.loginResponse({
+        loading: true,
+        success: false,
+        username: false,
+        password: false,
+        message: ''
+    }))
+    const response = yield call(ProductsService.loginUser, user)
+    if (response['success']) {
+        yield put(ProductActions.setAuthToken(response))
+        yield put(ProductActions.resetLoginResponse())
+    }
+    else
+        yield put(ProductActions.loginResponse({
+            loading: false,
+            username: response['username'],
+            password: response['password'],
+            success: response['success'],
+            message: response['message'],
+        }))
+}
+
+export function* getShippingMethods() {
+    const methods = yield call(ProductsService.GetShippingMethods)
+    yield put(ProductActions.setShippingMethods(methods))
+} 
+
+export function* saveShippingAddress({address,customerId}) {
+    yield call(ProductsService.saveShippingAddr,address,customerId)
+} 

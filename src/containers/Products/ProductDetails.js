@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, StatusBar, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { SliderBox } from "react-native-image-slider-box";
-import SearchBarWithBackAndCartComponent from './../../components/SearchBarWithBackAndCart/SearchBarWithBackAndCart';
-import { Icon, withBadge, ListItem } from 'react-native-elements';
-import Star from 'react-native-star-view';
-import { SwipeablePanel } from 'rn-swipeable-panel';
-import HTML from 'react-native-render-html';
+import Coupon from './Coupon';
+import { Shipping } from './Shipping';
 import { SpecItem } from './specItems';
 import { Seperator } from './seperator';
-import  Coupon  from './Coupon';
-import { Shipping } from './Shipping';
-import CustomerReview  from './CustomerReview';
+import Star from 'react-native-star-view';
+import HTML from 'react-native-render-html';
+import CustomerReview from './CustomerReview';
+import React, { useState, useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { SwipeablePanel } from 'rn-swipeable-panel';
+import { SliderBox } from "react-native-image-slider-box";
 import SellerRecommendation from './SellerRecommendation';
+import ProductActions from '../../stores/Products/Actions';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button, Icon, withBadge, ListItem } from 'react-native-elements';
 import HomeProductsComponent from '../../components/HomeProducts/HomeProducts';
+import { Text, View, StyleSheet, StatusBar, ScrollView } from 'react-native';
+import SearchBarWithBackAndCartComponent from './../../components/SearchBarWithBackAndCart/SearchBarWithBackAndCart';
 
-const ProductDetailsContainer = ({ route, navigation }) => {
+
+const ProductDetailsContainer = ({ route, navigation, wishes, auth, setCurrentRoute }) => {
   const [discountPercentage, setDiscount] = useState((((route.params.data.regular_price - route.params.data.sale_price) / route.params.data.regular_price) * 100).toFixed(2))
   const [swipeablePanelActive, setSipeablePanelActive] = useState(false)
   const [data, setData] = useState(route.params.data)
+  const dispatch = useDispatch()
   const [list, setList] = useState([
     {
       name: 'Specifications'
@@ -28,14 +32,17 @@ const ProductDetailsContainer = ({ route, navigation }) => {
 
   useEffect(() => {
     setData(route.params.data)
+    if (route.name !== undefined)
+      setCurrentRoute(route.name)
     return () => {
+      setCurrentRoute('')
       setDiscount(null);
       setSipeablePanelActive(false);
       setData(null);
       setList([]);
       setFonntFamily([])
     }
-  },[])
+  }, [])
 
   const openPanel = () => {
     setSipeablePanelActive(true)
@@ -44,7 +51,7 @@ const ProductDetailsContainer = ({ route, navigation }) => {
   const closePanel = () => {
     setSipeablePanelActive(false)
   };
-  const BadgedIcon = withBadge(2)(Icon)
+  const BadgedIcon = withBadge(wishes)(Icon)
   return (
     <SafeAreaView style={{ backgroundColor: 'white' }} >
       <StatusBar translucent barStyle="dark-content" />
@@ -70,8 +77,16 @@ const ProductDetailsContainer = ({ route, navigation }) => {
             }
 
           </View>
-          <View style={{ position: 'absolute', left: '90%' }}>
-            <BadgedIcon type="feather" name="heart" color={'grey'} />
+          <View style={{ position: 'absolute', left: '80%' }}>
+            <BadgedIcon
+              type="feather"
+              name="heart"
+              size={38}
+              color={'grey'}
+              onPress={() => {
+                dispatch(ProductActions.addToWishList(data))
+              }}
+            />
           </View>
 
         </View>
@@ -96,12 +111,53 @@ const ProductDetailsContainer = ({ route, navigation }) => {
           }
         </View>
         <Coupon />
-        <Shipping />
+        <Shipping product={data} />
         {/* <CustomerReview /> */}
-        <SellerRecommendation />
-        <HomeProductsComponent />
+        {/* <SellerRecommendation /> */}
+        {/* <HomeProductsComponent /> */}
       </ScrollView>
 
+      <View style={styles.footer}>
+
+        <Button
+          title="Add To Cart"
+          titleStyle={{ color: '#f56a79', fontWeight: 'bold' }}
+          buttonStyle={{ height: 50, width: '100%', borderRadius: 0, backgroundColor: '#f4d8d6' }}
+          containerStyle={{ borderRadius: 0 }}
+          onPress={() => {
+            if (!auth['token'])
+              navigation.navigate('auth', {
+                screen: 'auth'
+              })
+            else {
+              dispatch(ProductActions.getShippingMethods())
+              navigation.navigate('products', {
+                screen: 'confirm_cart_product',
+                params: { type: 'ADD_TO_CART', product: data }
+              })
+            }
+          }}
+        />
+
+        <Button
+          title="Buy Now"
+          titleStyle={{ fontWeight: 'bold' }}
+          buttonStyle={{ height: 50, width: '100%', borderRadius: 0, backgroundColor: '#f56a79' }}
+          containerStyle={{ borderRadius: 0 }}
+          onPress={() => {
+            if (!auth['token'])
+              navigation.navigate('auth', {
+                screen: 'auth',
+                params: { next: 'confirm_cart_product', product: data, type: 'BUY_NOW'}
+              })
+            else
+              navigation.navigate('products', {
+                screen: 'confirm_cart_product',
+                params: { type: 'BUY_NOW', product: data }
+              })
+          }}
+        />
+      </View>
 
       <SwipeablePanel
         fullWidth
@@ -113,21 +169,40 @@ const ProductDetailsContainer = ({ route, navigation }) => {
         <SpecItem title={'Specification'} isHeader />
         <Seperator />
         <HTML html={data.description} containerStyle={{ marginHorizontal: 10 }} ignoredStyles={ignoredStyles} />
-        {/* <Specifications leftText={'Brand Name'} rightText={'FIGI'} />
-        <Seperator />
-        <Specifications leftText={'Biometrics Technology'} rightText={'Fingerprint Recognition'} />
-        <Seperator />
-        <Specifications leftText={'Front Camera Quantity'} rightText={'1'} /> */}
-
       </SwipeablePanel>
     </SafeAreaView>
   )
-
 }
 
-export default ProductDetailsContainer;
+function mapStateToProps({ products }) {
+  const { wishlist, auth } = products;
+  return {
+    wishes: wishlist.length,
+    auth
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentRoute: (route) => {
+      dispatch(ProductActions.currentRoute(route))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetailsContainer)
 
 const styles = StyleSheet.create({
+  footer: {
+    flex: 0.1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 40,
+    width: '100%'
+  },
   row: {
     display: 'flex',
     flexDirection: 'row',
@@ -135,7 +210,6 @@ const styles = StyleSheet.create({
   sliderImages: {
     zIndex: 1,
     resizeMode: 'contain',
-    // backgroundColor:'white'
   },
   price: {
     fontSize: 22,

@@ -127,6 +127,143 @@ export const AllAttributes = (state, action) => {
     return state;
 }
 
+export const AddToCart = (state, action) => {
+
+    const allProducts = state.cart.length !== 0 ? state.cart.concat(action.product) : [action.product]
+    const unique = [...new Map(allProducts.map(item => [item['id'], item])).values()]
+    if (action.product) {
+        return ({
+            ...state,
+            cart: unique
+        })
+    }
+    return state;
+}
+
+export const removeFromCart = (state, action) => {
+    if (action.products) {
+        return ({
+            ...state,
+            cart: action.products
+        })
+    }
+    return state;
+}
+
+export const addWishList = (state, action) => {
+    const allWish = state.wishlist !== undefined && state.wishlist.length !== 0 ? state.wishlist.concat(action.wishlist) : [action.wishlist]
+    const unique = [...new Map(allWish.map(item => [item['id'], item])).values()]
+
+    if (action.wishlist) {
+        return ({
+            ...state,
+            wishlist: unique
+        })
+    }
+    return state;
+}
+
+export const setCurrentRoute = (state, action) => {
+    return ({
+        ...state,
+        current_route: action.route
+    })
+}
+
+export const setRegisterResponse = (state, action) => {
+    return ({
+        ...state,
+        register_success: action.response
+    })
+}
+
+export const resetRegisterResponse = (state, action) => {
+    return ({
+        ...state,
+        register_success: {
+            loading: false,
+            email: false,
+            username: false,
+            success: true,
+            message: state.register_success['message']
+        }
+    })
+}
+
+export const resetAllRegisterResponse = (state, action) => {
+    return ({
+        ...state,
+        register_success: {
+            loading: false,
+            email: state.register_success['email'],
+            username: state.register_success['username'],
+            success: false,
+            message: state.register_success['message']
+        }
+    })
+}
+
+export const setAuthToken = (state, action) => {
+    return ({
+        ...state,
+        auth: {
+            id: action.credentials['id'],
+            token: action.credentials['token'],
+            displayName: action.credentials['displayName'],
+            email: action.credentials['email'],
+        }
+    })
+}
+
+export const setLoginResponse = (state, action) => {
+    return ({
+        ...state,
+        login_success: {
+            loading: action.states['loading'],
+            success: action.states['success'],
+            username: action.states['username'],
+            password: action.states['password'],
+            message: action.states['message'],
+        }
+    })
+}
+
+export const resetLoginResponse = (state, action) => {
+    return ({
+        ...state,
+        login_success: {
+            loading: false,
+            success: false,
+            username:false,
+            password: false,
+            message: '',
+        }
+    })
+}
+
+
+export const logout = (state, action) => {
+    return ({
+        ...state,
+        auth: {
+            id:null,
+            token: null,
+            displayName: '',
+            email: '',
+        }
+    })
+}
+
+export const setShippingMethods = (state, action) => {
+    return ({
+        ...state,
+        shipping_methods: action.methods
+    })
+}
+
+
+
+
 export const ProductReducer = createReducer(INITIAL_STATE, {
     [ProductTypes.ALL_PRODUCTS]: allProducts,
     [ProductTypes.ON_SALE_PRODUCTS]: SalesProducts,
@@ -140,4 +277,16 @@ export const ProductReducer = createReducer(INITIAL_STATE, {
     [ProductTypes.REVIEWS_BY_PRODUCT]: ReviewsByProduct,
     [ProductTypes.ALL_COUPONS]: AllCoupons,
     [ProductTypes.ALL_ATTRIBUTES]: AllAttributes,
+    [ProductTypes.ADD_TO_CART]: AddToCart,
+    [ProductTypes.REMOVE_FROM_CART]: removeFromCart,
+    [ProductTypes.ADD_TO_WISH_LIST]: addWishList,
+    [ProductTypes.CURRENT_ROUTE]: setCurrentRoute,
+    [ProductTypes.REGISTER_RESPONSE]: setRegisterResponse,
+    [ProductTypes.RESET_REGISTER_RESPONSE]: resetRegisterResponse,
+    [ProductTypes.RESET_ALL_REGISTER_RESPONSE]: resetAllRegisterResponse,
+    [ProductTypes.SET_AUTH_TOKEN]: setAuthToken,
+    [ProductTypes.LOGIN_RESPONSE]: setLoginResponse,
+    [ProductTypes.RESET_LOGIN_RESPONSE]: resetLoginResponse,
+    [ProductTypes.SET_SHIPPING_METHODS]: setShippingMethods,
+    [ProductTypes.LOGOUT]: logout,
 })

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import ImageBlurLoading from 'react-native-image-blur-loading';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,6 @@ import mapCategoriesToImages from './../CategoriesImages/CategoriesImages';
 export default function CategoryCardComponent({ data }) {
     const navigation = useNavigation();
     const dispatch = useDispatch()
-    const [image, setImage] = useState((data.image != undefined) || (data.image != null) ? data['image']['src'] : mapCategoriesToImages('dummy'))
     const toProducts = () => {
         dispatch(ProductActions.categoryId(data.id))
         navigation.navigate('products', {
@@ -18,7 +17,6 @@ export default function CategoryCardComponent({ data }) {
     }
     useEffect(() => {
         return () => {
-            setImage('')
         }
     },[])
     return (
@@ -26,7 +24,7 @@ export default function CategoryCardComponent({ data }) {
             <Pressable onPress={toProducts}>
                 <ImageBlurLoading
                     borderRadius={8}
-                    source={{ uri: image, cache: 'force-cache' }}
+                    source={{ uri: (data.image != undefined) || (data.image != null) ? data['image']['src'] : mapCategoriesToImages('dummy'), cache: 'force-cache' }}
                     style={styles.image}
                 />
                 <View style={[styles.categoryTextBox, { backgroundColor: '#f57576' }]}>

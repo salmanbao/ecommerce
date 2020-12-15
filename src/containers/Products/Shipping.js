@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { ListItem } from 'react-native-elements';
 import { Seperator } from './seperator';
+import { ListItem, Button } from 'react-native-elements';
 
 export const Shipping = () => {
     return (
@@ -24,6 +24,7 @@ export const Shipping = () => {
                 <ListItem.Chevron />
             </ListItem>
             <View style={{ height: 15, backgroundColor: '#fafafa' }} />
+
         </View>
     );
 };

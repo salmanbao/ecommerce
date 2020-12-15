@@ -4,9 +4,6 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
-/*
-https://reactnativeelements.com/docs/searchbar
-*/
 export default function SearchBarWithBackComponent({ navigation: { goBack } }) {
 
     const [search, setSearch] = useState('')
